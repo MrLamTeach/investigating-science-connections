@@ -92,201 +92,100 @@ summary{font-weight:700;cursor:pointer}
 </div>
 
 <script>
-const ROUNDS = [
-{
-  title:"Round 1 · Investigating with technology",
-  sub:"Practical investigations from the slides",
-  groups:[
-    {name:"Temperature on reaction rate", words:["Alka-Seltzer","Magnesium ribbon","Hydrochloric acid","Gas syringe"],
-     why:"The two reaction-rate pracs: Alka-Seltzer dissolving at different water temperatures, and Mg + HCl, timing how long it takes to collect 20 mL of gas in a syringe."},
-    {name:"Volume of gases", words:["Boyle's law","Charles' law","Kelvin scale","Model lung"],
-     why:"Boyle: pV = constant at constant temperature. Charles: V ∝ T at constant pressure, with T in kelvin (°C + 273). The model lung shows pressure–volume changes."},
-    {name:"Speed on distance travelled", words:["Sphero","Stopwatch","Tape measure","Distance = speed × time"],
-     why:"The Sphero robot investigation: set the speed, time the run and measure the distance travelled."},
-    {name:"Assessing safety", words:["Safety Data Sheet","Safety goggles","WHS guidelines","Risk assessment"],
-     why:"Assess the safety of the technologies chosen, using chemical safety data and Work Health and Safety guidelines."}
-  ],
-  herrings:[
-    {word:"Hydrochloric acid", tempts:"Assessing safety", why:"It's corrosive, so it feels like a safety word, but it's a reactant in the Mg + HCl rate prac. (The SDS is the safety technology.)"},
-    {word:"Gas syringe", tempts:"Volume of gases", why:"It measures gas volume, but in this prac it collects the 20 mL of hydrogen used to work out reaction rate."},
-    {word:"Kelvin scale", tempts:"Temperature on reaction rate", why:"Temperature is the IV in the rate prac, but kelvin is needed for Charles' law (V ∝ T only works in kelvin)."},
-    {word:"Stopwatch", tempts:"Temperature on reaction rate", why:"The rate prac is timed too, but the stopwatch is the timing tool in the Sphero speed–distance investigation."}
-  ]
-},
-{
-  title:"Round 2 · Errors, accuracy & devices",
-  sub:"Random vs systematic error; analogue vs digital",
-  groups:[
-    {name:"Systematic error", words:["Zero error","Faulty calibration","Consistent offset","Fix by recalibrating"],
-     why:"Every reading is shifted by the same amount in the same direction. This affects accuracy, and repeating trials won't fix it."},
-    {name:"Random error", words:["Reaction time","Scatter around the mean","Reduce by repeating","Changing conditions"],
-     why:"Unpredictable variation in both directions (stopwatch timing, wind, humidity). Repeat trials and average to reduce its effect."},
-    {name:"Analogue technology", words:["Liquid-in-glass thermometer","Clock with hands","Continuous scale","Parallax"],
-     why:"A continuously varying value on a scale, read by eye. This brings in parallax and estimating between the markings."},
-    {name:"Digital technology", words:["Data logger","Temperature probe","Binary signal","Fixed decimal display"],
-     why:"Information is converted into binary (0/1) and shown as discrete values. Record the full reading shown (1.32 s, not 1.3 s)."}
-  ],
-  herrings:[
-    {word:"Parallax", tempts:"Random / systematic error", why:"It's a reading error, but here it identifies analogue devices: you only get parallax when reading a scale by eye."},
-    {word:"Reaction time", tempts:"Analogue technology (stopwatches & clocks)", why:"It's about timing, but the point is the human error in starting and stopping, which is random."},
-    {word:"Temperature probe", tempts:"Analogue technology (thermometers)", why:"It measures temperature like the glass thermometer, but it's an electronic sensor that gives a digital readout."},
-    {word:"Zero error", tempts:"Digital technology (tare/zero button)", why:"Digital balances have a zero button, but a zero error (an instrument not reading zero at the start) is the classic systematic error."}
-  ]
-},
-{
-  title:"Round 3 · Technology → Science",
-  sub:"Part 1: how new technologies produced evidence for theories and models",
-  groups:[
-    {name:"X-ray diffraction & DNA", words:["Rosalind Franklin","Photo 51","Diffraction pattern","Double helix"],
-     why:"X-rays scattered by crystallised DNA produced Photo 51. Its X-shaped pattern was evidence for Watson and Crick's double helix model."},
-    {name:"Detecting radioactivity", words:["Geiger–Müller counter","Cloud chamber","Film badge","Photographic plate"],
-     why:"Becquerel's fogged photographic plates revealed radioactivity. Cloud chambers show particle tracks, film badges darken with exposure, and G–M counters count ionising events."},
-    {name:"Rutherford's gold foil experiment", words:["Alpha particles","Gold foil","Fluorescent screen","Nucleus"],
-     why:"Alpha particles fired at thin gold foil flashed on a screen. A few bounced back, giving evidence for a tiny, dense, positive nucleus."},
-    {name:"Modelling Earth's geological history", words:["Plate tectonics","Mantle flow","Computer simulation","Fault zones"],
-     why:"Computer simulations model mantle flow, plate motion and fault zones. This is evidence that supports plate tectonic theory."}
-  ],
-  herrings:[
-    {word:"Photographic plate", tempts:"X-ray diffraction & DNA", why:"Photo 51 was a photograph, but the photographic plate here is Becquerel's: uranium fogged it, revealing radioactivity."},
-    {word:"Nucleus", tempts:"X-ray diffraction & DNA", why:"DNA is found in the cell nucleus, but this is the atomic nucleus revealed by the gold foil experiment."},
-    {word:"Fluorescent screen", tempts:"Detecting radioactivity", why:"It does detect particles, but it's the screen that surrounded the gold foil and flashed when hit by alpha particles."},
-    {word:"Alpha particles", tempts:"Detecting radioactivity", why:"Alpha tracks show up in cloud chambers, but alpha particles were the 'bullets' fired at the gold foil."}
-  ]
-},
-{
-  title:"Round 4 · Science → Technology",
-  sub:"Part 2: how theories and laws drove the development of new technologies",
-  groups:[
-    {name:"Laws of reflection & refraction", words:["Snell's law","Reflecting telescope","Compound microscope","Endoscope"],
-     why:"Refraction (Snell's law) led to lenses in microscopes, reflection to mirrors in telescopes, and total internal reflection to the optical fibres in endoscopes."},
-    {name:"Radioactivity & decay", words:["Gamma rays","Radiotherapy","Half-life","Little Boy"],
-     why:"Radioactive decay knowledge led to radiotherapy (gamma beams kill cancer cells), the use of half-life in choosing isotopes, and nuclear bombs such as Little Boy."},
-    {name:"DNA structure → biotechnology", words:["Plasmid","Restriction enzyme","Bt cotton","Insulin-making bacteria"],
-     why:"Restriction enzymes cut genes out, and plasmids carry them into another organism (recombinant DNA). This gives transgenic organisms such as Bt cotton and insulin-producing bacteria."},
-    {name:"Newton's laws → earthquake-proofing", words:["Inertia","Base isolation","Tuned mass damper","Cross-bracing"],
-     why:"Newton's first law: on base isolators the building's inertia keeps it still while the ground moves. Dampers and bracing absorb and resist forces."}
-  ],
-  herrings:[
-    {word:"Gamma rays", tempts:"Laws of reflection & refraction", why:"They're electromagnetic waves like light, but they come from radioactive decay and are used in radiotherapy."},
-    {word:"Endoscope", tempts:"Radioactivity & decay (medical technology)", why:"It's a medical device, but it works by total internal reflection in optical fibres. That's optics, not radiation."},
-    {word:"Insulin-making bacteria", tempts:"Radioactivity & decay (medical technology)", why:"Medical again, but insulin comes from genetically modified bacteria, so it's a DNA technology."},
-    {word:"Compound microscope", tempts:"DNA structure → biotechnology", why:"It's a lab tool used in biology, but it was developed from the laws of refraction (lenses)."}
-  ]
-},
-{
-  title:"Round 5 · People, places & Country",
-  sub:"LHC, the Australian context and key scientists",
-  groups:[
-    {name:"Large Hadron Collider", words:["CERN","Higgs boson","Protons","International collaboration"],
-     why:"The Standard Model predicted the Higgs boson, and finding it needed CERN's LHC, which smashes protons together. It was built and run by scientists from many countries."},
-    {name:"Aboriginal & Torres Strait Islander knowledge", words:["Bush medicine","Emu bush","Cultural & intellectual property","Community partnership"],
-     why:"Emu bush has been used for sores and colds. This knowledge is Indigenous cultural and intellectual property, so ethical drug development needs partnership with communities on Country."},
-    {name:"The DNA story", words:["Franklin","Wilkins","Watson","Crick"],
-     why:"Franklin and Wilkins produced the X-ray diffraction evidence, and Watson and Crick built the double helix model (1953)."},
-    {name:"Building atomic theory", words:["Becquerel","Marie Curie","Rutherford","Geiger"],
-     why:"Becquerel discovered radioactivity and the Curies investigated it. Geiger did the gold foil experiment under Rutherford, who proposed the nuclear model."}
-  ],
-  herrings:[
-    {word:"Higgs boson", tempts:"A group of scientists", why:"It's named after Peter Higgs, but it's a particle: the one the LHC was built to find."},
-    {word:"Protons", tempts:"Building atomic theory", why:"A subatomic particle, but here they're what the LHC accelerates and collides."},
-    {word:"Geiger", tempts:"Large Hadron Collider (particle detectors)", why:"Particle detection is his famous link, but Geiger was Rutherford's assistant in the gold foil experiment."},
-    {word:"International collaboration", tempts:"Aboriginal & Torres Strait Islander knowledge (partnership)", why:"It's about working together, but this is the many countries behind CERN and the LHC."}
-  ]
-},
-{
-  tab:"Bonus 1",
-  title:"Bonus 1 · Staffroom or science?",
-  sub:"Is it a teacher, a scientist or a unit?",
-  groups:[
-    {name:"Our teachers", words:["Lay","Frew","Rogers","Mai"],
-     why:"Teachers at our school. Hopefully you didn't put any of them in the atomic theory group!"},
-    {name:"The DNA story", words:["Franklin","Wilkins","Watson","Crick"],
-     why:"Franklin and Wilkins produced the X-ray diffraction evidence, and Watson and Crick built the double helix model (1953)."},
-    {name:"Building atomic theory", words:["Becquerel","Curie","Rutherford","Geiger"],
-     why:"Becquerel discovered radioactivity and the Curies investigated it. Geiger did the gold foil experiment under Rutherford."},
-    {name:"Units named after scientists", words:["Kelvin","Pascal","Volt","Joule"],
-     why:"Kelvin (temperature, for Charles' law), pascal (pressure, for Boyle's law), volt (voltage) and joule (energy)."}
-  ],
-  herrings:[
-    {word:"Becquerel", tempts:"Units named after scientists", why:"The becquerel (Bq) is the unit of radioactivity, but here it's Henri Becquerel, who discovered radioactivity with photographic plates."},
-    {word:"Curie", tempts:"Units named after scientists", why:"The curie is an old unit of radioactivity, but here it's Marie Curie, who helped build atomic theory."},
-    {word:"Kelvin", tempts:"Our teachers", why:"It sounds like someone's name (it was Lord Kelvin's title), but here it's the SI unit of temperature."},
-    {word:"Crick", tempts:"Our teachers", why:"Could be a staff member, but it's Francis Crick of Watson and Crick."}
-  ]
-},
-{
-  tab:"Bonus 2",
-  title:"Bonus 2 · Who's in the staffroom?",
-  sub:"Teachers, laws, particles and light",
-  groups:[
-    {name:"Our teachers", words:["Downes","Sant","Lam","Huang"],
-     why:"Teachers at our school."},
-    {name:"Scientists with laws named after them", words:["Boyle","Charles","Snell","Newton"],
-     why:"Boyle's law and Charles' law (gases), Snell's law (refraction) and Newton's laws (motion and earthquake-proofing)."},
-    {name:"Particles", words:["Proton","Neutron","Electron","Higgs"],
-     why:"Subatomic particles. The Higgs boson was found at the LHC in 2012."},
-    {name:"Optical technology", words:["Telescope","Microscope","Optical fibre","Endoscope"],
-     why:"Technologies developed from the laws of reflection and refraction."}
-  ],
-  herrings:[
-    {word:"Charles", tempts:"Our teachers", why:"Looks like someone's first name, but it's Jacques Charles of Charles' law (V ∝ T)."},
-    {word:"Higgs", tempts:"Our teachers", why:"Sounds like a surname (Peter Higgs), but on its own here it's the Higgs boson particle."},
-    {word:"Newton", tempts:"Our teachers", why:"A person's name, but Isaac Newton's first law is behind base isolation in earthquake-proof buildings."},
-    {word:"Electron", tempts:"Optical technology", why:"Think electron microscope? Those use electron beams, not light. Here it's a particle."}
-  ]
-},
-{
-  tab:"Bonus 3",
-  title:"Bonus 3 · Staffroom shuffle",
-  sub:"Teachers, nicknames, pracs and plant medicines",
-  groups:[
-    {name:"Our teachers", words:["Koulouris","Alexander-Enobakhare","Choudary","Bhagchandani"],
-     why:"Teachers at our school. Bonus points if you can spell them all!"},
-    {name:"Nicknames & code names", words:["Little Boy","Photo 51","God particle","Plum pudding"],
-     why:"Little Boy (the Hiroshima bomb), Photo 51 (Franklin's DNA image), the 'God particle' (the media's name for the Higgs boson) and the plum pudding model (Thomson's atom)."},
-    {name:"Practical investigations", words:["Alka-Seltzer","Model lung","Magnesium ribbon","Data logger"],
-     why:"Equipment and materials from the Module 6 practical investigations in the slides."},
-    {name:"Medicines from plants", words:["Emu bush","Willow bark","Aspirin","Bush medicine"],
-     why:"Emu bush is an Aboriginal bush medicine. Aspirin was developed from salicylic acid in willow bark."}
-  ],
-  herrings:[
-    {word:"Plum pudding", tempts:"Medicines from plants", why:"It sounds like food made from plants, but it's the nickname for Thomson's model of the atom."},
-    {word:"Aspirin", tempts:"Practical investigations", why:"Alka-Seltzer contains aspirin, but aspirin itself belongs with the plant medicines (from willow bark)."},
-    {word:"Alka-Seltzer", tempts:"Medicines from plants", why:"It's a medicine, but here it's the tablet used in the temperature on reaction rate prac."},
-    {word:"Little Boy", tempts:"Our teachers", why:"Sounds like a person, but it's the code name of the atomic bomb dropped on Hiroshima."}
-  ]
-}
+const POOL = [
+  // Working scientifically: practical investigations (slides)
+  {name:"Temperature on reaction rate", tags:["rate-prac"], words:["Alka-Seltzer","Magnesium strip","Hydrochloric acid","Rate = 20 mL ÷ time"],
+   why:"Alka-Seltzer tablets in water at different temperatures, and the HSC method: drop a magnesium strip into HCl and time how long it takes to collect 20 mL of gas."},
+  {name:"Volume of gases", tags:["gas","gaslaw"], words:["Boyle's law","Charles' law","Kelvin scale","Model lung"],
+   why:"Boyle: pV = constant at constant temperature. Charles: V ∝ T at constant pressure, with T in kelvin (°C + 273). The model lung shows pressure–volume changes."},
+  {name:"Speed on distance travelled", tags:["speed"], words:["Sphero","Draw a path","Distance = speed × time","Time = distance ÷ speed"],
+   why:"The Sphero prac: draw a path in the app, set the speed and measure the distance. Speed, distance and time are linked by d = s × t."},
+  {name:"Assessing safety", tags:["safety"], words:["Safety Data Sheet","Safety goggles","WHS guidelines","Risk assessment"],
+   why:"Assess the safety of technologies using chemical safety data and Work Health and Safety guidelines, e.g. goggles stop acid injuring the eye."},
+  {name:"Testing for gases", tags:["gastests"], words:["Squeaky pop","Splint relights","Limewater","Damp litmus paper"],
+   why:"Hydrogen makes a lit splint pop, oxygen relights the splint, carbon dioxide turns limewater milky, and chlorine bleaches damp litmus paper."},
+  {name:"Systematic error", tags:["systematic"], words:["Poor calibration","Faulty measuring device","Detached thermometer column","Recalibrate the instrument"],
+   why:"Every reading is shifted the same way (like the HSC thermometer that read 3 °C out). Fix it by checking and recalibrating the instrument."},
+  {name:"Random error", tags:["random"], words:["Stopwatch reaction time","Wind and humidity","Repeat trials","Calculate a mean"],
+   why:"Unpredictable variation from human reaction time or changing conditions. Reduce its effect by repeating trials and averaging."},
+  {name:"Analogue technology", tags:["analogue"], words:["Clock with hands","Liquid-in-glass thermometer","Varying amplitude","Reading between scale marks"],
+   why:"Analogue technology turns information into electric pulses of varying amplitude, and you read it from a scale by eye."},
+  {name:"Digital technology", tags:["digital"], words:["Binary (0 or 1)","Digital ammeter","Stop clock to 0.01 s","Record the full reading"],
+   why:"Digital technology turns information into binary. Record every decimal shown, e.g. 1.32 s, not 1.3 s."},
+  {name:"Describing data quality", tags:["quality"], words:["Accuracy","Precision","Uncertainty","Reliability"],
+   why:"Accuracy is closeness to the true value, precision is how fine or consistent readings are, uncertainty is the range the true value lies in, and reliability is consistency when repeated."},
+  // Part 1: technology → science
+  {name:"X-ray diffraction & DNA", tags:["dna-xray","franklin"], words:["Rosalind Franklin","Photo 51","Diffraction pattern","Double helix"],
+   why:"X-rays diffracted by DNA crystals made a distinctive pattern (Photo 51). This was evidence for Watson and Crick's double helix model."},
+  {name:"Detecting radioactivity", tags:["detecting"], words:["Geiger–Müller counter","Wilson cloud chamber","Film badge","Photographic plate"],
+   why:"Uranium ores fogged photographic plates, revealing radioactivity. Cloud chambers show particle tracks, film badges record workers' exposure, and G–M counters detect emissions."},
+  {name:"Rutherford's gold foil experiment", tags:["goldfoil"], words:["Alpha particles","Gold foil","Screen that flashes","Nucleus"],
+   why:"Alpha particles were fired at thin gold foil, and a screen flashed where they hit. Most passed through, showing that atoms are mostly empty space with a small, massive, positive nucleus."},
+  {name:"Modelling Earth's geological history", tags:["geology"], words:["Plate tectonics","Mantle flow","Computer simulation","Fault zones"],
+   why:"Simulations model mantle flow, plate motion and fault zones. This is evidence that supports plate tectonic theory."},
+  {name:"The Hadron collider", tags:["lhc"], words:["CERN","Higgs boson","Particle accelerator","Standard Model"],
+   why:"The Standard Model needs the Higgs boson to explain why particles have mass. CERN's particle accelerator (the Large Hadron Collider) found it."},
+  // Part 2: science → technology
+  {name:"Laws of reflection & refraction", tags:["optics"], words:["Microscope","Reflecting telescope","Optic fibres","Adaptive optics"],
+   why:"Refraction led to microscopes, and reflection led to optic fibres and telescope mirrors. Adaptive optics change mirror shape to correct atmospheric distortion."},
+  {name:"Radioactivity → technology", tags:["radiotech"], words:["Gamma rays","Radiotherapy","Little Boy","Manhattan Project"],
+   why:"Radioactive decay knowledge led to radiotherapy (gamma rays directed at cancer cells) and to nuclear bombs such as Little Boy (Manhattan Project)."},
+  {name:"DNA structure → biotechnology", tags:["biotech"], words:["Plasmid","Recombinant DNA","Bt cotton","Transgenic"],
+   why:"Knowing DNA contains genes allowed a gene to be cut out of one organism and inserted into another (recombinant DNA), e.g. transgenic Bt cotton."},
+  {name:"Newton's laws → earthquake-proofing", tags:["earthquake"], words:["Inertia","Base isolation","Newton's first law","Shock absorbers"],
+   why:"Base isolation rests buildings on shock-absorbing objects. When the ground shakes, inertia holds the building still (Newton's first law)."},
+  {name:"Kidney science → technology", tags:["dialysis"], words:["Dialysis machine","Kidneys filter blood","Membranes","Cellulose fibres"],
+   why:"From the slides: knowing how kidneys filter blood led to dialysis machines, and understanding membranes led to cellulose-based synthetic fibres."},
+  // Part 3: Australian context
+  {name:"Aboriginal & Torres Strait Islander knowledge", tags:["indigenous"], words:["Bush medicine","Emu bush","Cultural & intellectual property","Partnership with communities"],
+   why:"Emu bush has been used as a decoction for sores and an infusion for headaches and colds. This knowledge is Indigenous cultural and intellectual property, so research needs partnership with communities."},
+  {name:"Ethics of bioharvesting", tags:["indigenous","bioharvest"], words:["Overharvesting","Sacred sites","Slow-growing plants","Country and Place"],
+   why:"Harvest areas may be sacred, native plants can be slow to grow, overharvesting damages the environment, and plants are bioharvested from Country and Place."},
+  // Fun: people
+  {name:"Scientists in Module 6", tags:["scientists","franklin"], words:["Watson","Crick","Rutherford","J.J. Thomson"],
+   why:"Watson and Crick modelled DNA, Rutherford ran the gold foil experiment, and Thomson's plum pudding model was disproved by it."},
+  {name:"Our teachers", tags:["teachers"], words:["Lay","Frew","Rogers","Mai"], why:"Teachers at our school."},
+  {name:"Our teachers", tags:["teachers"], words:["Downes","Sant","Lam","Huang"], why:"Teachers at our school."},
+  {name:"Our teachers", tags:["teachers"], words:["Koulouris","Alexander-Enobakhare","Choudary","Bhagchandani"], why:"Teachers at our school. Bonus points if you can spell them all!"}
 ];
+// Red herrings: a tile that belongs to its own group but looks like it fits a group with one of these tags
+const HERRINGS = {
+  "Hydrochloric acid":{tempts:["safety"],why:"It's a hazard, but here it's a reactant in the rate prac. (The Safety Data Sheet is the safety technology.)"},
+  "Kelvin scale":{tempts:["rate-prac","analogue"],why:"It's about temperature, but kelvin is needed for Charles' law calculations (°C + 273)."},
+  "Model lung":{tempts:["dialysis"],why:"It's a model of a body part, but it's used to show how pressure changes gas volume."},
+  "Limewater":{tempts:["gas"],why:"It's about gases, but limewater tests for carbon dioxide. It doesn't measure volume."},
+  "Squeaky pop":{tempts:["rate-prac"],why:"Mg + HCl does make hydrogen, but the squeaky pop is the test for hydrogen gas."},
+  "Stopwatch reaction time":{tempts:["speed","rate-prac"],why:"Stopwatches are used in pracs, but human reaction time is the random error here."},
+  "Liquid-in-glass thermometer":{tempts:["systematic","rate-prac"],why:"The HSC faulty thermometer comes to mind, but this tile is an example of an analogue device."},
+  "Poor calibration":{tempts:["digital","analogue"],why:"Any device can be badly calibrated, but poor calibration is the classic cause of systematic error."},
+  "Accuracy":{tempts:["systematic"],why:"Systematic errors affect accuracy, but accuracy itself describes data quality."},
+  "Precision":{tempts:["random","digital"],why:"Random error affects precision, and digital readings show it, but precision describes data quality."},
+  "Record the full reading":{tempts:["quality","random"],why:"It sounds like a data-quality rule, but it's specifically about digital displays (1.32 s, not 1.3 s)."},
+  "Photographic plate":{tempts:["dna-xray"],why:"Photo 51 was a photograph, but photographic plates fogged by uranium revealed radioactivity."},
+  "Nucleus":{tempts:["dna-xray","biotech"],why:"DNA is found in the cell nucleus, but this is the atomic nucleus found by the gold foil experiment."},
+  "Screen that flashes":{tempts:["detecting"],why:"It does detect particles, but it's the screen around Rutherford's gold foil."},
+  "Alpha particles":{tempts:["detecting","lhc"],why:"Alpha tracks show in cloud chambers, but alpha particles were the 'bullets' fired at the gold foil."},
+  "Particle accelerator":{tempts:["detecting","goldfoil"],why:"It's about particles, but it's what the Hadron collider is: a machine that accelerates protons."},
+  "Higgs boson":{tempts:["scientists","teachers"],why:"It's named after a person (Peter Higgs), but it's the particle found at CERN."},
+  "Gamma rays":{tempts:["optics"],why:"They're electromagnetic waves like light, but they come from radioactive decay and are used in radiotherapy."},
+  "Optic fibres":{tempts:["dialysis","radiotech"],why:"They're used in medicine, but they were developed from the law of reflection."},
+  "Microscope":{tempts:["biotech","dna-xray"],why:"It's a biology tool, but microscopes were developed from the law of refraction."},
+  "Shock absorbers":{tempts:["geology"],why:"They're about earthquakes, but they're the engineering under base-isolated buildings."},
+  "Fault zones":{tempts:["earthquake"],why:"They cause earthquakes, but here they're modelled in computer simulations of plate movement."},
+  "Membranes":{tempts:["biotech"],why:"They sound like cell biology, but here they're about filtering blood in dialysis."},
+  "Transgenic":{tempts:["indigenous","bioharvest"],why:"It's about organisms, but transgenic technology inserts a gene from one species into another."},
+  "Emu bush":{tempts:["biotech"],why:"It's a plant with medical uses, but it's Aboriginal bush medicine, not a GM crop."},
+  "Country and Place":{tempts:["geology"],why:"It sounds like geography, but it's the Aboriginal concept of where plants are bioharvested from."},
+  "Rutherford":{tempts:["teachers","goldfoil"],why:"Could be a staff member, but Rutherford fired alpha particles at gold foil."},
+  "Watson":{tempts:["teachers"],why:"Could be a staff member, but it's Watson of Watson and Crick (DNA)."},
+  "Crick":{tempts:["teachers"],why:"Could be a staff member, but it's Crick of Watson and Crick (DNA)."},
+  "Little Boy":{tempts:["teachers","scientists"],why:"Sounds like a person, but it's the nuclear bomb dropped on Hiroshima."},
+  "Sphero":{tempts:["teachers","detecting"],why:"Sounds like a name, but it's the robot used in the speed on distance prac."}
+};
+const HERRING_WHY={}, TEMPTS={};
+Object.entries(HERRINGS).forEach(([w,h])=>{HERRING_WHY[w]=h.why;TEMPTS[w]=h.tempts;});
+POOL.forEach((g,i)=>g.id=String(i));
 
-// ---------- Mix-and-match engine ----------
-// Each group gets tags; two groups sharing a tag (or a word) never appear together,
-// so a random board can't have two groups that are too alike.
-const TAGS={
- "0:0":["rate-prac"],"0:1":["gas","kelvin","gaslaw"],"0:2":["speed"],"0:3":["safety"],
- "1:0":["systematic"],"1:1":["random"],"1:2":["analogue"],"1:3":["digital"],
- "2:0":["dna-xray","franklin"],"2:1":["detecting"],"2:2":["goldfoil","subatomic"],"2:3":["geology"],
- "3:0":["optics","snell"],"3:1":["radiotech"],"3:2":["biotech"],"3:3":["earthquake"],
- "4:0":["lhc"],"4:1":["indigenous"],
- "5:0":["teachers"],"5:1":["dna-people","franklin"],"5:2":["atomic-people"],"5:3":["units","kelvin"],
- "6:0":["teachers"],"6:1":["lawpeople","gaslaw","snell"],"6:2":["particles","subatomic","lhc"],"6:3":["optics"],
- "7:0":["teachers"],"7:1":["nicknames","lhc"],"7:2":["pracs","digital"],"7:3":["plant-meds","indigenous"]
-};
-// Which kinds of group each red herring is tempting
-const TEMPTS={
- "Hydrochloric acid":["safety"],"Gas syringe":["gas"],"Kelvin scale":["rate-prac"],"Stopwatch":["rate-prac"],
- "Parallax":["systematic","random"],"Reaction time":["analogue"],"Temperature probe":["analogue"],"Zero error":["digital"],
- "Photographic plate":["dna-xray"],"Nucleus":["dna-xray"],"Fluorescent screen":["detecting"],"Alpha particles":["detecting"],
- "Gamma rays":["optics"],"Endoscope":["radiotech"],"Insulin-making bacteria":["radiotech","plant-meds"],"Compound microscope":["biotech"],
- "Higgs boson":["teachers","dna-people","atomic-people","lawpeople"],"Protons":["atomic-people"],"Geiger":["lhc","detecting"],"International collaboration":["indigenous"],
- "Becquerel":["units"],"Curie":["units"],"Kelvin":["teachers"],"Crick":["teachers"],
- "Charles":["teachers"],"Higgs":["teachers"],"Newton":["teachers","units"],"Electron":["optics"],
- "Plum pudding":["plant-meds","goldfoil"],"Aspirin":["pracs","rate-prac"],"Alka-Seltzer":["plant-meds"],"Little Boy":["teachers"]
-};
-const POOL=[], HERRING_WHY={};
-ROUNDS.forEach((R,ri)=>{
-  R.groups.forEach((g,gi)=>{const t=TAGS[ri+":"+gi]; if(t)POOL.push({...g,tags:t,id:ri+":"+gi});});
-  R.herrings.forEach(h=>{HERRING_WHY[h.word]=h.why;});
-});
 const owner={}; POOL.forEach((g,i)=>g.words.forEach(w=>(owner[w]=owner[w]||[]).push(i)));
 function clash(a,b){const A=POOL[a],B=POOL[b];return A.tags.some(t=>B.tags.includes(t))||A.words.some(w=>B.words.includes(w))}
 function activeHerrings(ids){
