@@ -45,6 +45,8 @@ header p{margin:0;color:var(--muted);font-size:15px}
 .herrings h3{margin:0 0 6px;text-align:center;text-transform:uppercase;font-size:15px}
 .herrings ul{margin:0;padding-left:18px;font-size:13.5px}
 .herrings li{margin:4px 0}
+.hint{text-align:center;font-size:14px;margin:0 0 12px;color:var(--ink)}
+.hint span{display:inline-block;background:var(--tile);border-radius:999px;padding:4px 12px;margin:3px;font-weight:600}
 .status{min-height:26px;text-align:center;font-weight:700;margin:12px 0 4px}
 .lives{text-align:center;font-size:14px;color:var(--muted)}
 .dot{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--tile-sel);margin:0 3px;vertical-align:middle}
@@ -74,12 +76,14 @@ summary{font-weight:700;cursor:pointer}
 
 
 <div id="solvedArea"></div>
+<div class="hint" id="hint"></div>
 <div class="grid" id="grid"></div>
 <div class="status" id="status"></div>
 <div class="lives" id="lives"></div>
 <div class="controls">
   <button id="shuffleBtn">Shuffle</button>
   <button id="clearBtn">Deselect</button>
+  <button id="hintBtn">💡 Hint</button>
   <button id="submitBtn" class="primary">Submit</button>
   <button id="newBtn">New game</button>
 </div>
@@ -320,7 +324,7 @@ function newGame(){
   lastIds=pick.ids;
   const ids=shuffle([...pick.ids]);
   S={ids,herrings:activeHerrings(ids),tiles:shuffle(ids.flatMap(i=>POOL[i].words)),
-     selected:[],solved:[],mistakes:0,over:false,won:false,guesses:[]};
+     selected:[],solved:[],hints:[],mistakes:0,over:false,won:false,guesses:[]};
   $("status").textContent="";
   render();
 }
@@ -337,6 +341,9 @@ function render(){
     html+=`<div class="herrings"><h3>🐟 The red herrings</h3><ul>${S.herrings.map(h=>`<li><b>${h.word}</b> (looked like <i>${h.lure.join(" / ")}</i>): ${h.why}</li>`).join("")}</ul></div>`;
   }
   $("solvedArea").innerHTML=html;
+  const shown=S.hints.filter(k=>!S.solved.includes(k));
+  $("hint").innerHTML=(!S.over&&shown.length)?"💡 Find: "+shown.map(k=>`<span>${POOL[S.ids[k]].name}</span>`).join(""):"";
+  $("hint").style.display=(!S.over&&shown.length)?"":"none";
   const grid=$("grid"); grid.innerHTML="";
   if(!S.over){
     S.tiles.filter(t=>!S.solved.includes(groupOf(t))).forEach(t=>{
@@ -350,6 +357,7 @@ function render(){
   $("submitBtn").disabled=S.over||S.selected.length!==4;
   $("clearBtn").disabled=S.over||!S.selected.length;
   $("shuffleBtn").disabled=S.over;
+  $("hintBtn").disabled=S.over||S.ids.every((_,k)=>S.solved.includes(k)||S.hints.includes(k));
 }
 function toggle(t){
   if(S.over)return;
@@ -379,6 +387,13 @@ function submit(){
   render(); $("status").textContent=msg;
 }
 $("submitBtn").onclick=submit;
+$("hintBtn").onclick=()=>{
+  const left=S.ids.map((_,k)=>k).filter(k=>!S.solved.includes(k)&&!S.hints.includes(k));
+  if(!left.length)return;
+  S.hints.push(left[Math.floor(Math.random()*left.length)]);
+  $("status").textContent="";
+  render();
+};
 $("clearBtn").onclick=()=>{S.selected=[];render()};
 $("shuffleBtn").onclick=()=>{shuffle(S.tiles);render()};
 $("newBtn").onclick=()=>{newGame();window.scrollTo({top:0,behavior:"smooth"})};
