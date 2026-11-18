@@ -72,7 +72,6 @@ summary{font-weight:700;cursor:pointer}
   <button id="themeBtn" aria-label="Toggle light and dark mode"></button>
 </header>
 
-<div class="rounds" id="rounds"></div>
 
 <div id="solvedArea"></div>
 <div class="grid" id="grid"></div>
@@ -82,8 +81,7 @@ summary{font-weight:700;cursor:pointer}
   <button id="shuffleBtn">Shuffle</button>
   <button id="clearBtn">Deselect</button>
   <button id="submitBtn" class="primary">Submit</button>
-  <button id="resetBtn">Restart round</button>
-  <button id="nextBtn" style="display:none">Next round →</button>
+  <button id="newBtn">New game</button>
 </div>
 
 
@@ -256,56 +254,95 @@ const ROUNDS = [
 }
 ];
 
+// ---------- Mix-and-match engine ----------
+// Each group gets tags; two groups sharing a tag (or a word) never appear together,
+// so a random board can't have two groups that are too alike.
+const TAGS={
+ "0:0":["rate-prac"],"0:1":["gas","kelvin","gaslaw"],"0:2":["speed"],"0:3":["safety"],
+ "1:0":["systematic"],"1:1":["random"],"1:2":["analogue"],"1:3":["digital"],
+ "2:0":["dna-xray","franklin"],"2:1":["detecting"],"2:2":["goldfoil","subatomic"],"2:3":["geology"],
+ "3:0":["optics","snell"],"3:1":["radiotech"],"3:2":["biotech"],"3:3":["earthquake"],
+ "4:0":["lhc"],"4:1":["indigenous"],
+ "5:0":["teachers"],"5:1":["dna-people","franklin"],"5:2":["atomic-people"],"5:3":["units","kelvin"],
+ "6:0":["teachers"],"6:1":["lawpeople","gaslaw","snell"],"6:2":["particles","subatomic","lhc"],"6:3":["optics"],
+ "7:0":["teachers"],"7:1":["nicknames","lhc"],"7:2":["pracs","digital"],"7:3":["plant-meds","indigenous"]
+};
+// Which kinds of group each red herring is tempting
+const TEMPTS={
+ "Hydrochloric acid":["safety"],"Gas syringe":["gas"],"Kelvin scale":["rate-prac"],"Stopwatch":["rate-prac"],
+ "Parallax":["systematic","random"],"Reaction time":["analogue"],"Temperature probe":["analogue"],"Zero error":["digital"],
+ "Photographic plate":["dna-xray"],"Nucleus":["dna-xray"],"Fluorescent screen":["detecting"],"Alpha particles":["detecting"],
+ "Gamma rays":["optics"],"Endoscope":["radiotech"],"Insulin-making bacteria":["radiotech","plant-meds"],"Compound microscope":["biotech"],
+ "Higgs boson":["teachers","dna-people","atomic-people","lawpeople"],"Protons":["atomic-people"],"Geiger":["lhc","detecting"],"International collaboration":["indigenous"],
+ "Becquerel":["units"],"Curie":["units"],"Kelvin":["teachers"],"Crick":["teachers"],
+ "Charles":["teachers"],"Higgs":["teachers"],"Newton":["teachers","units"],"Electron":["optics"],
+ "Plum pudding":["plant-meds","goldfoil"],"Aspirin":["pracs","rate-prac"],"Alka-Seltzer":["plant-meds"],"Little Boy":["teachers"]
+};
+const POOL=[], HERRING_WHY={};
+ROUNDS.forEach((R,ri)=>{
+  R.groups.forEach((g,gi)=>{const t=TAGS[ri+":"+gi]; if(t)POOL.push({...g,tags:t,id:ri+":"+gi});});
+  R.herrings.forEach(h=>{HERRING_WHY[h.word]=h.why;});
+});
+const owner={}; POOL.forEach((g,i)=>g.words.forEach(w=>(owner[w]=owner[w]||[]).push(i)));
+function clash(a,b){const A=POOL[a],B=POOL[b];return A.tags.some(t=>B.tags.includes(t))||A.words.some(w=>B.words.includes(w))}
+function activeHerrings(ids){
+  const out=[];
+  ids.forEach(i=>POOL[i].words.forEach(w=>{
+    const tempts=TEMPTS[w]; if(!tempts)return;
+    const lure=ids.filter(j=>j!==i&&POOL[j].tags.some(t=>tempts.includes(t)));
+    if(lure.length)out.push({word:w,lure:lure.map(j=>POOL[j].name),why:HERRING_WHY[w]});
+  }));
+  return out;
+}
+// Every valid board of 4 groups, scored by how many red herrings are live on it
+const BOARDS=[];
+for(let a=0;a<POOL.length;a++)for(let b=a+1;b<POOL.length;b++){if(clash(a,b))continue;
+ for(let c=b+1;c<POOL.length;c++){if(clash(a,c)||clash(b,c))continue;
+  for(let d=c+1;d<POOL.length;d++){if(clash(a,d)||clash(b,d)||clash(c,d))continue;
+   const ids=[a,b,c,d]; BOARDS.push({ids,score:activeHerrings(ids).length});}}}
+const GOOD=BOARDS.filter(x=>x.score>=4).length>=50?BOARDS.filter(x=>x.score>=4):BOARDS.filter(x=>x.score>=3);
+
 const COLORS=["var(--g0)","var(--g1)","var(--g2)","var(--g3)"];
 const MAX_MISTAKES=4;
-let r=0, state=[];
 const $=id=>document.getElementById(id);
-
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 
-function newState(i){
-  const R=ROUNDS[i];
-  const tiles=R.groups.flatMap(g=>g.words);
-  return {tiles:shuffle(tiles),selected:[],solved:[],mistakes:0,over:false,won:false,guesses:[]};
+let S=null, lastIds=[];
+function newGame(){
+  // Pick a random group first so every group gets a fair turn, then a board built around it
+  let pick, tries=0;
+  do{
+    const anchor=Math.floor(Math.random()*POOL.length);
+    const options=GOOD.filter(b=>b.ids.includes(anchor));
+    pick=options[Math.floor(Math.random()*options.length)];
+    tries++;
+  }while(tries<50 && (!pick || pick.ids.filter(i=>lastIds.includes(i)).length>1));
+  lastIds=pick.ids;
+  const ids=shuffle([...pick.ids]);
+  S={ids,herrings:activeHerrings(ids),tiles:shuffle(ids.flatMap(i=>POOL[i].words)),
+     selected:[],solved:[],mistakes:0,over:false,won:false,guesses:[]};
+  $("status").textContent="";
+  render();
 }
-ROUNDS.forEach((_,i)=>state[i]=newState(i));
-
-function groupOf(word){const R=ROUNDS[r];return R.groups.findIndex(g=>g.words.includes(word))}
-
-function renderTabs(){
-  $("rounds").innerHTML="";
-  ROUNDS.forEach((R,i)=>{
-    const b=document.createElement("button");
-    b.textContent=R.tab||("Round "+(i+1));
-    if(i===r)b.classList.add("active");
-    if(state[i].over)b.classList.add("done");
-    b.onclick=()=>{r=i;render();};
-    $("rounds").appendChild(b);
-  });
+function groupOf(w){return S.ids.findIndex(i=>POOL[i].words.includes(w))}
+function isHerring(w){return S.herrings.some(h=>h.word===w)}
+function solvedHTML(k){
+  const g=POOL[S.ids[k]];
+  return `<div class="solved" style="background:${COLORS[k]}"><h3>${g.name}</h3><div class="words">${g.words.map(w=>isHerring(w)?w+" 🐟":w).join(", ")}</div><div class="why">${g.why}</div></div>`;
 }
-
-function isHerring(w){return ROUNDS[r].herrings.some(h=>h.word===w)}
-function solvedHTML(gi,full){
-  const g=ROUNDS[r].groups[gi];
-  return `<div class="solved" style="background:${COLORS[gi]}"><h3>${g.name}</h3><div class="words">${g.words.map(w=>isHerring(w)?w+" 🐟":w).join(", ")}</div><div class="why">${g.why}</div></div>`;
-}
-
 function render(){
-  const S=state[r], R=ROUNDS[r];
-  renderTabs();
-  let html=S.solved.map(gi=>solvedHTML(gi)).join("");
+  let html=S.solved.map(k=>solvedHTML(k)).join("");
   if(S.over){
-    R.groups.forEach((g,gi)=>{if(!S.solved.includes(gi))html+=solvedHTML(gi)});
-    html+=`<div class="herrings"><h3>🐟 The red herrings</h3><ul>${R.herrings.map(h=>`<li><b>${h.word}</b> (looked like <i>${h.tempts}</i>): ${h.why}</li>`).join("")}</ul></div>`;
+    S.ids.forEach((_,k)=>{if(!S.solved.includes(k))html+=solvedHTML(k)});
+    html+=`<div class="herrings"><h3>🐟 The red herrings</h3><ul>${S.herrings.map(h=>`<li><b>${h.word}</b> (looked like <i>${h.lure.join(" / ")}</i>): ${h.why}</li>`).join("")}</ul></div>`;
   }
   $("solvedArea").innerHTML=html;
   const grid=$("grid"); grid.innerHTML="";
   if(!S.over){
-    S.tiles.filter(t=>!S.solved.some(gi=>R.groups[gi].words.includes(t))).forEach(t=>{
+    S.tiles.filter(t=>!S.solved.includes(groupOf(t))).forEach(t=>{
       const b=document.createElement("button");
       b.className="tile"+(S.selected.includes(t)?" sel":"");
-      b.textContent=t; b.dataset.w=t;
-      b.onclick=()=>toggle(t);
+      b.textContent=t; b.dataset.w=t; b.onclick=()=>toggle(t);
       grid.appendChild(b);
     });
   }
@@ -313,51 +350,38 @@ function render(){
   $("submitBtn").disabled=S.over||S.selected.length!==4;
   $("clearBtn").disabled=S.over||!S.selected.length;
   $("shuffleBtn").disabled=S.over;
-  $("nextBtn").style.display=(S.over&&r<ROUNDS.length-1)?"":"none";
-  if(S.over && !$("status").dataset.keep){
-    $("status").textContent=S.won?(S.mistakes===0?"Perfect! No mistakes 🎉":"Solved! 🎉"):"Out of mistakes. Here are the answers.";
-  }
 }
-
 function toggle(t){
-  const S=state[r]; if(S.over)return;
+  if(S.over)return;
   $("status").textContent="";
   const i=S.selected.indexOf(t);
   if(i>=0)S.selected.splice(i,1); else if(S.selected.length<4)S.selected.push(t);
   render();
 }
-
 function submit(){
-  const S=state[r], R=ROUNDS[r];
   if(S.selected.length!==4)return;
   const key=[...S.selected].sort().join("|");
   if(S.guesses.includes(key)){$("status").textContent="Already guessed!";return;}
   S.guesses.push(key);
-  const counts={};
-  S.selected.forEach(w=>{const g=groupOf(w);counts[g]=(counts[g]||0)+1});
-  const hit=Object.entries(counts).find(([g,c])=>g!=="-1"&&c===4);
+  const counts={}; S.selected.forEach(w=>{const g=groupOf(w);counts[g]=(counts[g]||0)+1});
+  const hit=Object.entries(counts).find(([g,c])=>c===4);
   if(hit){
     S.solved.push(+hit[0]); S.selected=[];
-    $("status").textContent="Correct! ✔";
     if(S.solved.length===4){S.over=true;S.won=true;}
     render();
-    if(S.over)$("status").textContent=S.mistakes===0?"Perfect! No mistakes 🎉 Now check the red herrings below.":"Solved! 🎉 Now check the red herrings below.";
+    $("status").textContent=S.over?(S.mistakes===0?"Perfect! No mistakes 🎉":"Solved! 🎉"):"Correct! ✔";
     return;
   }
   S.mistakes++;
-  let msg="Not a group.";
-  if(Object.entries(counts).some(([g,c])=>g!=="-1"&&c===3))msg="One away…";
+  const msg=Object.values(counts).some(c=>c===3)?"One away…":"Not a group.";
   document.querySelectorAll(".tile.sel").forEach(el=>{el.classList.remove("shake");void el.offsetWidth;el.classList.add("shake")});
-  if(S.mistakes>=MAX_MISTAKES){S.over=true;S.selected=[];render();$("status").textContent="Out of mistakes. Here are the answers and the red herrings.";return;}
-  setTimeout(()=>{render();$("status").textContent=msg;},350);
-  $("status").textContent=msg;
+  if(S.mistakes>=MAX_MISTAKES){S.over=true;S.selected=[];render();$("status").textContent="Out of mistakes. Here are the answers.";return;}
+  render(); $("status").textContent=msg;
 }
-
 $("submitBtn").onclick=submit;
-$("clearBtn").onclick=()=>{state[r].selected=[];render()};
-$("shuffleBtn").onclick=()=>{shuffle(state[r].tiles);render()};
-$("resetBtn").onclick=()=>{state[r]=newState(r);$("status").textContent="";render()};
-$("nextBtn").onclick=()=>{r++;$("status").textContent="";render();window.scrollTo({top:0,behavior:"smooth"})};
+$("clearBtn").onclick=()=>{S.selected=[];render()};
+$("shuffleBtn").onclick=()=>{shuffle(S.tiles);render()};
+$("newBtn").onclick=()=>{newGame();window.scrollTo({top:0,behavior:"smooth"})};
 
 function setTheme(t){
   document.documentElement.dataset.theme=t;
@@ -368,7 +392,7 @@ let saved=null; try{saved=localStorage.getItem("m6-theme")}catch(e){}
 setTheme(saved||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"));
 $("themeBtn").onclick=()=>setTheme(document.documentElement.dataset.theme==="dark"?"light":"dark");
 
-render();
+newGame();
 </script>
 </body>
 </html>
