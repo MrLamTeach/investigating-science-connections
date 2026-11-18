@@ -18,8 +18,8 @@ html[data-theme="dark"] .tile.sel{color:#16171b}
 *{box-sizing:border-box}
 body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink)}
 .wrap{max-width:640px;margin:0 auto;padding:20px 16px 60px}
-header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
-#themeBtn{border:2px solid var(--ink);background:var(--btn);color:var(--ink);border-radius:999px;padding:7px 14px;font:600 13px Inter,sans-serif;cursor:pointer;white-space:nowrap;margin-top:6px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px}
+#themeBtn{border:2px solid var(--ink);background:var(--btn);color:var(--ink);border-radius:999px;padding:5px 10px;font:600 15px Inter,sans-serif;cursor:pointer;white-space:nowrap;margin-top:4px}
 header h1{font-size:clamp(22px,4vw,32px);margin:4px 0 2px;font-weight:800;letter-spacing:-.5px}
 header p{margin:0;color:var(--muted);font-size:15px}
 .rounds{display:flex;flex-wrap:wrap;gap:6px;margin:18px 0 8px}
@@ -36,12 +36,12 @@ header p{margin:0;color:var(--muted);font-size:15px}
 .tile.sel{background:var(--tile-sel);color:#fff}
 .tile.shake{animation:shake .35s}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
-.solved{color:#1d1d1f;border-radius:8px;padding:12px 10px;text-align:center;margin-bottom:8px;animation:pop .3s}
+.solved{color:#1d1d1f;border-radius:8px;padding:12px 10px;text-align:center;margin-bottom:8px}
 @keyframes pop{from{transform:scale(.96);opacity:.4}to{transform:scale(1);opacity:1}}
 .solved h3{margin:0 0 3px;font-size:15px;text-transform:uppercase;font-weight:800}
 .solved .words{font-size:14px;font-weight:600}
 .solved .why{font-size:13px;margin-top:6px;font-weight:400;opacity:.9}
-.herrings{color:#1d1d1f;background:var(--herring);border-radius:8px;padding:12px;margin-bottom:8px;animation:pop .3s}
+.herrings{color:#1d1d1f;background:var(--herring);border-radius:8px;padding:12px;margin-bottom:8px}
 .herrings h3{margin:0 0 6px;text-align:center;text-transform:uppercase;font-size:15px}
 .herrings ul{margin:0;padding-left:18px;font-size:13.5px}
 .herrings li{margin:4px 0}
@@ -68,17 +68,11 @@ summary{font-weight:700;cursor:pointer}
 <body>
 <div class="wrap">
 <header>
-  <div>
-    <h1>Technologies Connections</h1>
-    <p>Year 12 Investigating Science · Module 6</p>
-  </div>
+  <h1>Technologies Connections</h1>
   <button id="themeBtn" aria-label="Toggle light and dark mode"></button>
 </header>
 
 <div class="rounds" id="rounds"></div>
-<div class="round-title" id="roundTitle"></div>
-<p class="round-sub" id="roundSub"></p>
-<div class="info">Find <b>4 groups of 4</b>. Watch out: <b>4 tiles are red herrings</b>. Each one belongs to a group but looks like it fits a different one.</div>
 
 <div id="solvedArea"></div>
 <div class="grid" id="grid"></div>
@@ -88,27 +82,11 @@ summary{font-weight:700;cursor:pointer}
   <button id="shuffleBtn">Shuffle</button>
   <button id="clearBtn">Deselect</button>
   <button id="submitBtn" class="primary">Submit</button>
-</div>
-<div class="controls">
   <button id="resetBtn">Restart round</button>
   <button id="nextBtn" style="display:none">Next round →</button>
 </div>
-<div class="score" id="score"></div>
 
-<details>
-  <summary>How to play</summary>
-  <div class="howto">
-    <p>Pick four tiles you think share a connection and press <b>Submit</b>. Get it right and the group locks in with its link to the unit. You can make <b>4 mistakes</b> per round.</p>
-    <p>“One away…” means three of your four belong together.</p>
-    <p>Each round has <b>4 red herrings</b> (marked 🐟 once solved). Each one belongs to one group but looks like it fits another, so there may seem to be five tiles for a group. Work out which group can't be completed without that tile.</p>
-    <p><b>Discussion idea:</b> after each round, ask students to explain where each red herring really belongs and why it looked like it fitted somewhere else.</p>
-  </div>
-</details>
 
-<details>
-  <summary>Teacher answer key</summary>
-  <div class="key" id="key"></div>
-</details>
 </div>
 
 <script>
@@ -315,8 +293,6 @@ function solvedHTML(gi,full){
 function render(){
   const S=state[r], R=ROUNDS[r];
   renderTabs();
-  $("roundTitle").textContent=R.title;
-  $("roundSub").textContent=R.sub;
   let html=S.solved.map(gi=>solvedHTML(gi)).join("");
   if(S.over){
     R.groups.forEach((g,gi)=>{if(!S.solved.includes(gi))html+=solvedHTML(gi)});
@@ -333,7 +309,7 @@ function render(){
       grid.appendChild(b);
     });
   }
-  $("lives").innerHTML="Mistakes remaining: "+Array.from({length:MAX_MISTAKES},(_,i)=>`<span class="dot ${i<S.mistakes?'lost':''}"></span>`).join("");
+  $("lives").innerHTML=Array.from({length:MAX_MISTAKES},(_,i)=>`<span class="dot ${i<S.mistakes?'lost':''}"></span>`).join("");
   $("submitBtn").disabled=S.over||S.selected.length!==4;
   $("clearBtn").disabled=S.over||!S.selected.length;
   $("shuffleBtn").disabled=S.over;
@@ -341,9 +317,6 @@ function render(){
   if(S.over && !$("status").dataset.keep){
     $("status").textContent=S.won?(S.mistakes===0?"Perfect! No mistakes 🎉":"Solved! 🎉"):"Out of mistakes. Here are the answers.";
   }
-  const done=state.filter(s=>s.over);
-  const totalGroups=state.reduce((a,s)=>a+s.solved.length,0);
-  $("score").textContent=`Groups found: ${totalGroups} / ${ROUNDS.length*4} · Rounds finished: ${done.length} / ${ROUNDS.length}`;
 }
 
 function toggle(t){
@@ -386,12 +359,9 @@ $("shuffleBtn").onclick=()=>{shuffle(state[r].tiles);render()};
 $("resetBtn").onclick=()=>{state[r]=newState(r);$("status").textContent="";render()};
 $("nextBtn").onclick=()=>{r++;$("status").textContent="";render();window.scrollTo({top:0,behavior:"smooth"})};
 
-// Teacher key
-$("key").innerHTML=ROUNDS.map(R=>`<h4>${R.title}</h4><table>${R.groups.map((g,gi)=>`<tr><td><span class="swatch" style="background:${COLORS[gi]}"></span>${g.name}</td><td>${g.words.join(", ")}</td></tr>`).join("")}<tr><td><span class="swatch" style="background:var(--herring)"></span>Red herrings 🐟</td><td>${R.herrings.map(h=>`${h.word} (looks like ${h.tempts})`).join("; ")}</td></tr></table>`).join("");
-
 function setTheme(t){
   document.documentElement.dataset.theme=t;
-  $("themeBtn").textContent=t==="dark"?"☀️ Light mode":"🌙 Dark mode";
+  $("themeBtn").textContent=t==="dark"?"☀️":"🌙";
   try{localStorage.setItem("m6-theme",t)}catch(e){}
 }
 let saved=null; try{saved=localStorage.getItem("m6-theme")}catch(e){}
