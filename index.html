@@ -3,9 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Investigating Science Module 6: technologies Connection</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<title>Investigating Science Module 6: technologies Games</title>
 <style>
 :root{
   --bg:#f6f4ef; --ink:#1d1d1f; --muted:#6b6b70; --tile:#e7e3d8; --tile-sel:#4a4a52;
@@ -16,14 +14,14 @@ html[data-theme="dark"]{--bg:#16171b;--ink:#ecebe6;--muted:#a0a0a8;--tile:#2c2d3
   --g0:#e3c64a;--g1:#8fb86b;--g2:#87aedb;--g3:#ad8ccc;--herring:#e06f5d}
 html[data-theme="dark"] .tile.sel{color:#16171b}
 *{box-sizing:border-box}
-body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--ink)}
 .wrap{max-width:640px;margin:0 auto;padding:20px 16px 60px}
 header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:24px}
-#themeBtn{border:2px solid var(--ink);background:var(--btn);color:var(--ink);border-radius:999px;padding:5px 10px;font:600 15px Inter,sans-serif;cursor:pointer;white-space:nowrap;margin-top:4px}
+#themeBtn{border:2px solid var(--ink);background:var(--btn);color:var(--ink);border-radius:999px;padding:5px 10px;font:600 15px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;cursor:pointer;white-space:nowrap;margin-top:4px}
 header h1{font-size:clamp(22px,4vw,32px);margin:4px 0 2px;font-weight:800;letter-spacing:-.5px}
 header p{margin:0;color:var(--muted);font-size:15px}
 .rounds{display:flex;flex-wrap:wrap;gap:6px;margin:18px 0 8px}
-.rounds button{border:2px solid var(--ink);color:var(--ink);background:transparent;border-radius:999px;padding:6px 12px;font:600 13px Inter,sans-serif;cursor:pointer}
+.rounds button{border:2px solid var(--ink);color:var(--ink);background:transparent;border-radius:999px;padding:6px 12px;font:600 13px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;cursor:pointer}
 .rounds button.active{background:var(--ink);color:var(--bg)}
 .rounds button.done::after{content:" ✓"}
 .round-title{margin:10px 0 2px;font-size:19px;font-weight:800}
@@ -31,7 +29,7 @@ header p{margin:0;color:var(--muted);font-size:15px}
 .info{font-size:14px;margin-bottom:12px;color:var(--muted)}
 .info b{color:var(--herring)}
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.tile{overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto;background:var(--tile);border:none;border-radius:8px;min-height:80px;padding:6px;font:700 clamp(11px,1.9vw,15px) Inter,sans-serif;text-transform:uppercase;cursor:pointer;line-height:1.15;color:var(--ink);transition:transform .1s, background .15s}
+.tile{overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto;background:var(--tile);border:none;border-radius:8px;min-height:80px;padding:6px;font:700 clamp(11px,1.9vw,15px) -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;text-transform:uppercase;cursor:pointer;line-height:1.15;color:var(--ink);transition:transform .1s, background .15s}
 .tile:hover{transform:translateY(-1px)}
 .tile.sel{background:var(--tile-sel);color:#fff}
 .tile.shake{animation:shake .35s}
@@ -52,7 +50,7 @@ header p{margin:0;color:var(--muted);font-size:15px}
 .dot{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--tile-sel);margin:0 3px;vertical-align:middle}
 .dot.lost{background:var(--dotlost)}
 .controls{display:flex;justify-content:center;gap:8px;margin-top:22px;flex-wrap:wrap}
-.controls button{border:2px solid var(--ink);color:var(--ink);background:var(--btn);border-radius:999px;padding:9px 18px;font:600 14px Inter,sans-serif;cursor:pointer}
+.controls button{border:2px solid var(--ink);color:var(--ink);background:var(--btn);border-radius:999px;padding:9px 18px;font:600 14px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;cursor:pointer}
 .controls button.primary{background:var(--ink);color:var(--bg)}
 .controls button:disabled{opacity:.35;cursor:default}
 .score{text-align:center;margin-top:14px;font-size:14px;color:var(--muted)}
@@ -65,16 +63,154 @@ summary{font-weight:700;cursor:pointer}
 .swatch{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px}
 .howto{font-size:14px;line-height:1.5}
 @media (max-width:520px){.tile{min-height:62px;font-size:10px;padding:4px}}
+
+/* ---------- hub ---------- */
+[hidden]{display:none!important}
+.topbar{display:flex;align-items:center;gap:10px;margin:-8px 0 18px;min-height:34px}
+#backBtn{border:2px solid var(--ink);background:var(--btn);color:var(--ink);border-radius:999px;padding:6px 14px;font:600 14px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;cursor:pointer}
+#gameName{font-size:20px;font-weight:800}
+.menu{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+.menu button{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:18px 16px;text-align:left;cursor:pointer;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;transition:transform .1s,border-color .1s}
+.menu button:hover{transform:translateY(-2px);border-color:var(--ink)}
+.menu .ic{font-size:30px;display:block;margin-bottom:8px}
+.menu b{display:block;font-size:17px;margin-bottom:4px}
+.menu span.d{font-size:13px;color:var(--muted);line-height:1.35}
+/* ---------- crossword ---------- */
+.xw-clue{min-height:44px;background:var(--tile);border-radius:8px;padding:10px 12px;font-size:15px;margin-bottom:12px}
+.xw-grid{display:grid;gap:0;margin:0 auto;border:2px solid var(--ink);background:var(--ink);width:100%}
+.xw-cell{position:relative;aspect-ratio:1;background:var(--card);border:1px solid var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center}
+.xw-cell.block{background:var(--bg);border-color:var(--bg);cursor:default}
+.xw-cell.word{background:#cfe3f7}
+.xw-cell.cur{background:#f7d774}
+html[data-theme="dark"] .xw-cell:not(.block){background:#3a3c45}
+html[data-theme="dark"] .xw-cell.word{background:#2f4a66}
+html[data-theme="dark"] .xw-cell.cur{background:#8a7424}
+.xw-cell.wrong .xw-letter{color:#d23b2a}
+.xw-cell.revealed .xw-letter{color:#2a62c9}
+.xw-cell.right{background:#bfe0a6}
+html[data-theme="dark"] .xw-cell.right{background:#3d5a2a}
+.xw-num{position:absolute;top:1px;left:3px;font-size:clamp(7px,1.5vw,10px);color:var(--muted);font-weight:600}
+.xw-letter{font-weight:700;font-size:clamp(13px,3.6vw,22px);text-transform:uppercase}
+.xw-input{position:fixed;left:0;top:40%;width:1px;height:1px;opacity:0;font-size:16px;border:0;padding:0}
+.xw-clues{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+.xw-clues h3{margin:0 0 6px;font-size:15px;text-transform:uppercase}
+.xw-clues ol{list-style:none;margin:0;padding:0;font-size:14px}
+.xw-clues li{padding:5px 6px;border-radius:6px;cursor:pointer;line-height:1.3}
+.xw-clues li.on{background:#cfe3f7}
+html[data-theme="dark"] .xw-clues li.on{background:#2f4a66}
+.xw-len{color:var(--muted);font-size:12px}
+@media (max-width:520px){.xw-clues{grid-template-columns:1fr}}
+/* ---------- wordle ---------- */
+.wd-board{display:grid;gap:6px;justify-content:center;margin:6px 0 4px}
+.wd-board{--n:5;--sz:min(60px,calc((min(100vw,640px) - 32px - (var(--n) - 1)*6px)/var(--n)))}
+.wd-row{display:grid;grid-template-columns:repeat(var(--n),var(--sz));gap:6px}
+.wd-len{text-align:center;color:var(--muted);font-size:14px;margin-bottom:6px}
+.wd-tile{aspect-ratio:1;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:calc(var(--sz)*.5);text-transform:uppercase}
+.wd-tile.filled{border-color:var(--muted)}
+.correct{background:#6aaa64!important;border-color:#6aaa64!important;color:#fff!important}
+.present{background:#c9b458!important;border-color:#c9b458!important;color:#fff!important}
+.absent{background:#787c7e!important;border-color:#787c7e!important;color:#fff!important}
+.wd-keys{margin-top:8px}
+.wd-krow{display:flex;justify-content:center;gap:5px;margin-bottom:6px}
+.wd-key{flex:1;max-width:44px;height:52px;border:none;border-radius:6px;background:var(--tile);color:var(--ink);font:700 15px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;cursor:pointer;padding:0}
+.wd-key.wide{max-width:66px;font-size:12px;flex:1.5}
+.wd-clue{text-align:center;font-size:15px;min-height:22px;margin:6px 0}
+/* ---------- hangman ---------- */
+.hm-svg{display:block;margin:0 auto;width:200px;max-width:60%}
+.hm-svg line,.hm-svg circle{stroke:var(--ink);stroke-width:4;fill:none;stroke-linecap:round}
+.hm-word{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:16px 0 8px}
+.hm-l{width:clamp(20px,6vw,30px);border-bottom:3px solid var(--ink);text-align:center;font-weight:800;font-size:clamp(18px,5vw,26px);height:clamp(28px,7vw,36px)}
+.hm-gap{width:16px}
+.hm-sym{font-weight:800;font-size:24px}
+.hm-keys{display:grid;grid-template-columns:repeat(9,1fr);gap:5px;max-width:460px;margin:12px auto 0}
+.hm-key{max-width:none;height:44px}
+.hm-key:disabled{cursor:default}
+/* ---------- 10 hints ---------- */
+.th-score{text-align:right;font-size:14px;color:var(--muted);margin-bottom:8px}
+.th-list{list-style:none;margin:0;padding:0}
+.th-list li{display:flex;gap:10px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px 12px;margin-bottom:6px;font-size:15px;line-height:1.35}
+.th-list li.hidden-hint{color:var(--muted);background:transparent;border-style:dashed}
+.th-n{flex:none;width:24px;height:24px;border-radius:50%;background:var(--ink);color:var(--bg);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.hidden-hint .th-n{background:var(--dotlost)}
+.th-row{display:flex;gap:8px;margin-top:14px}
+.th-row input{flex:1;min-width:0;font-size:16px;padding:10px 14px;border-radius:999px;border:2px solid var(--ink);background:var(--card);color:var(--ink)}
+.th-row button{border:2px solid var(--ink);background:var(--ink);color:var(--bg);border-radius:999px;padding:9px 18px;font:600 14px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;cursor:pointer}
+.th-row button:disabled{opacity:.35}
+.th-answer{text-align:center;font-size:18px;font-weight:800;min-height:24px}
+
+/* ---------- word search ---------- */
+.ws-wrap{display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:16px;align-items:start}
+.ws-grid{display:grid;gap:3px;user-select:none}
+.ws-cell{aspect-ratio:1;border:none;border-radius:6px;background:var(--tile);color:var(--ink);font:700 clamp(13px,3.6vw,19px) -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;cursor:pointer;padding:0}
+.ws-cell.found{background:#9fc77a;color:#1d1d1f}
+.ws-cell.start{background:#f2d65c;color:#1d1d1f;outline:2px solid var(--ink)}
+.ws-list{list-style:none;margin:0;padding:0;font-size:14px}
+.ws-list li{padding:5px 8px;border-radius:6px;background:var(--card);border:1px solid var(--line);margin-bottom:5px;font-weight:600}
+.ws-list li.done{text-decoration:line-through;opacity:.5}
+.ws-count{font-size:13px;color:var(--muted);margin-bottom:6px}
+@media (max-width:560px){.ws-wrap{grid-template-columns:1fr}.ws-list{display:flex;flex-wrap:wrap;gap:5px}.ws-list li{margin:0}}
+/* ---------- scramble ---------- */
+.sc-score,.sq-score{text-align:right;font-size:14px;color:var(--muted);margin-bottom:10px}
+.sc-letters{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:10px 0 14px}
+.sc-tile{width:clamp(34px,9vw,46px);height:clamp(34px,9vw,46px);border-radius:8px;background:var(--tile);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:clamp(18px,5vw,24px)}
+.sc-clue{text-align:center;font-size:16px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}
+.sc-help{text-align:center;color:var(--muted);min-height:20px;margin-top:8px;font-weight:600}
+/* ---------- memory ---------- */
+.mm-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.mm-card{min-height:96px;border:none;border-radius:10px;background:var(--tile-sel);color:var(--bg);cursor:pointer;padding:6px;font:600 12.5px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;line-height:1.25;transition:transform .15s}
+.mm-card span{display:block}
+.mm-card:not(.up) span{font-size:26px;font-weight:800;opacity:.6}
+.mm-card.up{background:var(--card);color:var(--ink);border:2px solid var(--line)}
+.mm-card.up.term{font-size:14px;font-weight:800;text-transform:uppercase}
+.mm-card.matched{background:#bfe0a6;color:#1d1d1f;border-color:#9fc77a}
+@media (max-width:520px){.mm-grid{grid-template-columns:repeat(3,1fr)}.mm-card{min-height:90px;font-size:11px}.mm-card.up.term{font-size:12px}}
+/* ---------- speed quiz ---------- */
+.sq-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.sq-time{font-size:22px;font-weight:800}
+.sq-time.low{color:#d23b2a}
+.sq-clue{text-align:center;font-size:18px;font-weight:600;min-height:64px;display:flex;align-items:center;justify-content:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px}
+.sq-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sq-opt{border:none;border-radius:10px;background:var(--tile);color:var(--ink);padding:16px 8px;font:700 15px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;cursor:pointer}
+.sq-final{text-align:center;font-size:22px;font-weight:800;margin:14px 0}
+.sq-rev{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:14px}
+.sq-rev ul{margin:6px 0 0;padding-left:18px}
+/* ---------- sort it ---------- */
+.so-q{text-align:center;color:var(--muted);font-size:14px;margin-bottom:10px}
+.so-card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:26px 18px;text-align:center;font-size:19px;font-weight:700;min-height:110px;display:flex;align-items:center;justify-content:center}
+.so-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.so-btns button{border:none;border-radius:12px;padding:16px 10px;font:700 15px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;cursor:pointer;color:#1d1d1f;line-height:1.3}
+.so-btns small{display:block;font-weight:500;font-size:12px;margin-top:3px}
+#soTS{background:var(--g2)} #soST{background:var(--g0)}
+.so-feedback{text-align:center;min-height:44px;margin-top:12px;font-size:15px}
+.so-feedback.good{color:#3f8a37} .so-feedback.bad{color:#d23b2a}
+html[data-theme="dark"] .so-feedback.good{color:#8fd07f} html[data-theme="dark"] .so-feedback.bad{color:#ff8a7a}
+.so-progress{text-align:right;font-size:14px;color:var(--muted);margin-bottom:8px}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header>
-  <h1>Investigating Science Module 6: technologies Connection</h1>
+  <h1>Investigating Science Module 6: technologies</h1>
   <button id="themeBtn" aria-label="Toggle light and dark mode"></button>
 </header>
+<div class="topbar" id="topbar" hidden><button id="backBtn" hidden>← Games</button><div id="gameName"></div></div>
 
+<section id="menu" class="screen">
+  <div class="menu">
+    <button data-game="connect"><span class="ic">🧩</span><b>Connection</b><span class="d">Sort 16 tiles into 4 groups. Watch out for red herrings!</span></button>
+    <button data-game="xword"><span class="ic">✏️</span><b>Mini Crossword</b><span class="d">A new mini crossword of Module 6 terms every time.</span></button>
+    <button data-game="wordle"><span class="ic">🟩</span><b>Wordle</b><span class="d">Guess the science word in 6 tries. Words are 4 to 10 letters long.</span></button>
+    <button data-game="hang"><span class="ic">🔤</span><b>Hangman</b><span class="d">Guess the key term one letter at a time.</span></button>
+    <button data-game="hints"><span class="ic">🔍</span><b>10 Hints</b><span class="d">Name the mystery term in as few hints as you can.</span></button>
+    <button data-game="search"><span class="ic">🔎</span><b>Word Search</b><span class="d">Find 8 hidden terms. Try hard mode with clues only!</span></button>
+    <button data-game="scramble"><span class="ic">🔀</span><b>Word Scramble</b><span class="d">Unscramble the key term from its clue. Build a streak!</span></button>
+    <button data-game="memory"><span class="ic">🃏</span><b>Memory Match</b><span class="d">Flip cards to match each term with its clue.</span></button>
+    <button data-game="speed"><span class="ic">⏱️</span><b>Speed Quiz</b><span class="d">How many can you get right in 60 seconds?</span></button>
+    <button data-game="sort"><span class="ic">↔️</span><b>Sort It</b><span class="d">Did technology drive the science, or did the science drive the technology?</span></button>
+  </div>
+</section>
 
+<section id="screen-connect" class="screen" hidden>
 <div id="solvedArea"></div>
 <div class="hint" id="hint"></div>
 <div class="grid" id="grid"></div>
@@ -89,9 +225,119 @@ summary{font-weight:700;cursor:pointer}
 </div>
 
 
-</div>
 
+</section>
+
+<section id="screen-xword" class="screen" hidden>
+  <div class="xw-clue" id="xwClue"></div>
+  <div class="xw-grid" id="xwGrid"></div>
+  <input id="xwInput" class="xw-input" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" aria-label="Crossword letter">
+  <div class="status" id="xwStatus"></div>
+  <div class="controls">
+    <button id="xwCheck">Check</button>
+    <button id="xwRevealWord">Reveal word</button>
+    <button id="xwRevealAll">Reveal all</button>
+    <button id="xwNew" class="primary">New crossword</button>
+  </div>
+  <div class="xw-clues"><div><h3>Across</h3><ol id="xwAcross"></ol></div><div><h3>Down</h3><ol id="xwDown"></ol></div></div>
+</section>
+
+<section id="screen-wordle" class="screen" hidden>
+  <div class="wd-len" id="wdLen"></div>
+  <div class="wd-board" id="wdBoard"></div>
+  <div class="status" id="wdStatus"></div>
+  <div class="wd-clue" id="wdClue"></div>
+  <div class="wd-keys" id="wdKeys"></div>
+  <div class="controls">
+    <button id="wdHintBtn">💡 Hint</button>
+    <button id="wdNew" class="primary">New word</button>
+  </div>
+</section>
+
+<section id="screen-hang" class="screen" hidden>
+  <svg class="hm-svg" viewBox="0 0 200 220" aria-hidden="true">
+    <line x1="20" y1="210" x2="140" y2="210"/><line x1="50" y1="210" x2="50" y2="20"/><line x1="50" y1="20" x2="130" y2="20"/><line x1="130" y1="20" x2="130" y2="45"/>
+    <circle class="hm-part" cx="130" cy="65" r="20"/>
+    <line class="hm-part" x1="130" y1="85" x2="130" y2="145"/>
+    <line class="hm-part" x1="130" y1="100" x2="105" y2="125"/>
+    <line class="hm-part" x1="130" y1="100" x2="155" y2="125"/>
+    <line class="hm-part" x1="130" y1="145" x2="110" y2="180"/>
+    <line class="hm-part" x1="130" y1="145" x2="150" y2="180"/>
+  </svg>
+  <div class="hm-word" id="hmWord"></div>
+  <div class="lives" id="hmLives"></div>
+  <div class="wd-clue" id="hmClue"></div>
+  <div class="status" id="hmStatus"></div>
+  <div class="hm-keys" id="hmKeys"></div>
+  <div class="controls">
+    <button id="hmHintBtn">💡 Hint</button>
+    <button id="hmNew" class="primary">New word</button>
+  </div>
+</section>
+
+<section id="screen-hints" class="screen" hidden>
+  <div class="th-score" id="thScore"></div>
+  <ol class="th-list" id="thList"></ol>
+  <div class="lives" id="thPoints"></div>
+  <div class="th-row"><input id="thGuess" placeholder="Type your answer…" autocomplete="off"><button id="thSubmit">Guess</button></div>
+  <div class="status" id="thStatus"></div>
+  <div class="th-answer" id="thAnswer"></div>
+  <div class="controls">
+    <button id="thMore">Next hint</button>
+    <button id="thGive">Give up</button>
+    <button id="thNew" class="primary">Next mystery</button>
+  </div>
+</section>
+<section id="screen-search" class="screen" hidden>
+  <div class="ws-wrap">
+    <div class="ws-grid" id="wsGrid"></div>
+    <div><div class="ws-count" id="wsCount"></div><ul class="ws-list" id="wsList"></ul></div>
+  </div>
+  <div class="status" id="wsStatus"></div>
+  <div class="controls"><button id="wsClues">Hard mode: show clues</button><button id="wsNew" class="primary">New puzzle</button></div>
+</section>
+
+<section id="screen-scramble" class="screen" hidden>
+  <div class="sc-score" id="scScore"></div>
+  <div class="sc-clue" id="scClue"></div>
+  <div class="sc-letters" id="scLetters"></div>
+  <div class="th-row"><input id="scGuess" placeholder="Unscramble it…" autocomplete="off" autocapitalize="characters"><button id="scSubmit">Check</button></div>
+  <div class="sc-help" id="scHelp"></div>
+  <div class="status" id="scStatus"></div>
+  <div class="controls"><button id="scShuffle">Shuffle letters</button><button id="scHint">💡 Hint</button><button id="scSkip">Skip</button></div>
+</section>
+
+<section id="screen-memory" class="screen" hidden>
+  <div class="sc-score" id="mmMoves"></div>
+  <div class="mm-grid" id="mmGrid"></div>
+  <div class="status" id="mmStatus"></div>
+  <div class="controls"><button id="mmNew" class="primary">New game</button></div>
+</section>
+
+<section id="screen-speed" class="screen" hidden>
+  <div class="sq-top"><div class="sq-time" id="sqTime"></div><div class="sq-score" id="sqScore"></div></div>
+  <div class="sq-clue" id="sqClue"></div>
+  <div class="sq-opts" id="sqOpts"></div>
+  <div id="sqEnd"></div>
+  <div class="controls"><button id="sqStart" class="primary">Start</button></div>
+</section>
+
+<section id="screen-sort" class="screen" hidden>
+  <div class="so-progress" id="soProgress"></div>
+  <div class="so-q">Which way did it go?</div>
+  <div id="soCard"></div>
+  <div class="so-btns" id="soBtns">
+    <button id="soTS">Technology → Science<small>The technology gave evidence for a theory</small></button>
+    <button id="soST">Science → Technology<small>The theory led to a new technology</small></button>
+  </div>
+  <div class="so-feedback" id="soFeedback"></div>
+  <div id="soEnd"></div>
+  <div class="controls"><button id="soNew" class="primary">New round</button></div>
+</section>
+</div>
 <script>
+// ---------- Connection groups (all from the Module 6 unit, notes and slides) ----------
+// tags: two groups sharing a tag never appear on the same board
 const POOL = [
   // Working scientifically: practical investigations (slides)
   {name:"Temperature on reaction rate", tags:["rate-prac"], words:["Alka-Seltzer","Magnesium strip","Hydrochloric acid","Rate = 20 mL ÷ time"],
@@ -307,6 +553,673 @@ setTheme(saved||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").
 $("themeBtn").onclick=()=>setTheme(document.documentElement.dataset.theme==="dark"?"light":"dark");
 
 newGame();
+
+// ================= Shared Module 6 word bank =================
+// show = how it's displayed (hangman), clue = short crossword/hangman clue
+const BANK = [
+  // Working scientifically (slides & notes)
+  {show:"ALKA-SELTZER", clue:"Tablet dissolved at different temperatures in the reaction rate prac"},
+  {show:"MAGNESIUM", clue:"Metal strip reacted with HCl to produce gas"},
+  {show:"KELVIN", clue:"Temperature scale for Charles' law (°C + 273)"},
+  {show:"BOYLE", clue:"His law: pV = a constant at constant temperature"},
+  {show:"CHARLES", clue:"His law: gas volume is proportional to temperature"},
+  {show:"SPHERO", clue:"Robot used in the speed on distance prac"},
+  {show:"STOPWATCH", clue:"Starting and stopping it adds reaction-time error"},
+  {show:"THERMOMETER", clue:"Analogue and digital ones were compared in the Alka-Seltzer prac"},
+  {show:"GOGGLES", clue:"Safety ___ stop acid injuring the eye"},
+  {show:"LIMEWATER", clue:"Turns milky (white precipitate) with carbon dioxide"},
+  {show:"CALIBRATION", clue:"Poor ___ of equipment gives inaccurate results"},
+  {show:"SYSTEMATIC", clue:"Error that shifts every reading the same way"},
+  {show:"RANDOM", clue:"Unpredictable error, reduced by repeating trials"},
+  {show:"ACCURACY", clue:"How close a measurement is to the true value"},
+  {show:"PRECISION", clue:"Record results to match the ___ of the instrument"},
+  {show:"UNCERTAINTY", clue:"Range of values within which the true value lies"},
+  {show:"ANALOGUE", clue:"Technology using electric pulses of varying amplitude"},
+  {show:"DIGITAL", clue:"Technology that translates information into binary"},
+  {show:"BINARY", clue:"Zero or one"},
+  {show:"AMPLITUDE", clue:"Analogue signals vary in this"},
+  {show:"RISK ASSESSMENT", clue:"Identifying hazards and precautions before a prac"},
+  {show:"MODEL LUNG", clue:"Used to show how pressure changes the volume of a gas"},
+  // Part 1: technology → science
+  {show:"DIFFRACTION", clue:"X-ray ___ revealed the structure of DNA"},
+  {show:"FRANKLIN", clue:"Rosalind ___: her X-ray images were evidence for DNA's shape"},
+  {show:"HELIX", clue:"DNA's double ___"},
+  {show:"DOUBLE HELIX", clue:"Shape of DNA in Watson and Crick's model"},
+  {show:"PHOTO FIFTY ONE", clue:"Famous X-ray diffraction image of DNA (spelt out)"},
+  {show:"GEIGER", clue:"___ counter: detects radioactive emissions"},
+  {show:"CLOUD CHAMBER", clue:"Wilson's device that shows the tracks of radiation"},
+  {show:"FILM BADGE", clue:"Worn by nuclear industry workers to record radiation exposure"},
+  {show:"PHOTOGRAPHIC", clue:"___ plates were fogged by uranium ores"},
+  {show:"URANIUM", clue:"Ore that exposed photographic plates, revealing radioactivity"},
+  {show:"ALPHA", clue:"Particles fired at the gold foil"},
+  {show:"GOLD FOIL", clue:"Thin metal sheet that alpha particles were fired at"},
+  {show:"NUCLEUS", clue:"Small, massive, positive centre of the atom"},
+  {show:"RUTHERFORD", clue:"Fired alpha particles at gold foil"},
+  {show:"PLUM PUDDING", clue:"Thomson's model, disproved by the gold foil experiment"},
+  {show:"TECTONICS", clue:"Plate ___: supported by computer simulations"},
+  {show:"PLATE TECTONICS", clue:"Theory that the lithosphere is split into moving plates"},
+  {show:"SIMULATION", clue:"Computer model of mantle flow and plate motion"},
+  {show:"MANTLE", clue:"Its flow helps cause tectonic plates to move"},
+  {show:"FAULT", clue:"___ zones: modelled in simulations of plate movement"},
+  {show:"HIGGS", clue:"___ boson: found using the Hadron collider"},
+  {show:"HADRON", clue:"The ___ collider found the Higgs boson"},
+  {show:"CERN", clue:"Organisation that runs the Large Hadron Collider"},
+  {show:"PROTON", clue:"Particle sped up in a particle accelerator"},
+  {show:"ACCELERATOR", clue:"Particle ___: machine that speeds up elementary particles"},
+  {show:"STANDARD MODEL", clue:"Theory that needs the Higgs boson to explain why particles have mass"},
+  // Part 2: science → technology
+  {show:"REFRACTION", clue:"Law that helped develop microscopes"},
+  {show:"REFLECTION", clue:"Law that helped develop optic fibres"},
+  {show:"MICROSCOPE", clue:"Creates magnified images of small objects"},
+  {show:"TELESCOPE", clue:"Reflecting ___ uses mirrors and adaptive optics"},
+  {show:"FIBRE", clue:"Optic ___: carries data for telecommunications"},
+  {show:"MIRROR", clue:"Adaptive optics change its shape to correct distortion"},
+  {show:"LASER", clue:"Beam shone through the atmosphere to measure distortion for adaptive optics"},
+  {show:"ADAPTIVE OPTICS", clue:"Corrects atmospheric distortion in modern telescopes"},
+  {show:"GAMMA", clue:"Rays directed at cancer cells in radiotherapy"},
+  {show:"RADIOTHERAPY", clue:"Cancer treatment using a beam of gamma rays"},
+  {show:"HALF-LIFE", clue:"Time for half of a radioactive sample to decay"},
+  {show:"MANHATTAN", clue:"___ Project: developed the first nuclear bombs"},
+  {show:"HIROSHIMA", clue:"City where Little Boy was dropped"},
+  {show:"LITTLE BOY", clue:"Nuclear bomb dropped on Hiroshima"},
+  {show:"PLASMID", clue:"Round piece of DNA used to carry a gene into bacteria"},
+  {show:"RECOMBINANT", clue:"___ DNA joins DNA from two different species"},
+  {show:"TRANSGENIC", clue:"___ technology inserts a gene from one species into another"},
+  {show:"BT COTTON", clue:"Crop with a gene inserted from another species"},
+  {show:"FORENSIC", clue:"___ DNA technology matches crime-scene samples to suspects"},
+  {show:"INERTIA", clue:"Holds a base-isolated building still during an earthquake"},
+  {show:"NEWTON", clue:"His first law explains base isolation"},
+  {show:"BASE ISOLATION", clue:"Rests a building on shock-absorbing objects"},
+  {show:"DIALYSIS", clue:"Machines invented from knowing how kidneys filter blood"},
+  {show:"CELLULOSE", clue:"___-based synthetic fibres filter blood in dialysis"},
+  // Part 3: Australian context
+  {show:"EMU BUSH", clue:"Used as a decoction for sores and an infusion for colds"},
+  {show:"BUSH MEDICINE", clue:"Using plants for medicinal purposes"},
+  {show:"BIOHARVESTING", clue:"Collecting plants from the natural environment for food and medicine"},
+  {show:"OVERHARVESTING", clue:"Taking too many plants, damaging the environment"},
+  {show:"SACRED", clue:"Harvest areas may be ___ to Aboriginal communities"},
+  {show:"DECOCTION", clue:"Emu bush was boiled into one for treating sores"}
+];
+const letters = s => s.replace(/[^A-Z]/g,"");
+function shuf(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+const el = id => document.getElementById(id);
+
+// ================= Navigation =================
+const GAMES = {connect:"Connection", xword:"Mini Crossword", wordle:"Wordle", hang:"Hangman", hints:"10 Hints"};
+function showGame(key){
+  document.querySelectorAll(".screen").forEach(s=>s.hidden=true);
+  if(!key||!GAMES[key]){el("menu").hidden=false; el("backBtn").hidden=true; el("topbar").hidden=true; el("gameName").textContent=""; return;}
+  el("screen-"+key).hidden=false; el("backBtn").hidden=false; el("topbar").hidden=false; el("gameName").textContent=GAMES[key];
+  activeGame=key;
+  if(key==="xword"&&!XW.grid)xwNew();
+  if(key==="wordle"&&!WD.answer)wdNew();
+  if(key==="hang"&&!HM.word)hmNew();
+  if(key==="hints"&&!TH.item)thNew();
+  window.scrollTo(0,0);
+}
+let activeGame=null;
+document.querySelectorAll("[data-game]").forEach(b=>b.onclick=()=>showGame(b.dataset.game));
+el("backBtn").onclick=()=>{activeGame=null;showGame(null)};
+
+// ================= Mini Crossword =================
+const XW = {grid:null};
+function xwBuild(){
+  const pool = shuf(BANK.filter(b=>{const L=letters(b.show).length;return L>=4&&L<=7}).map(b=>({w:letters(b.show),clue:b.clue,show:b.show})));
+  let best=null;
+  for(let attempt=0;attempt<80;attempt++){
+    const words=shuf([...pool]).slice(0,14);
+    const placed=[]; const cells={};
+    const key=(r,c)=>r+","+c;
+    const get=(r,c)=>cells[key(r,c)];
+    function fits(w,r,c,dir){
+      const dr=dir==="D"?1:0, dc=dir==="A"?1:0; let cross=0;
+      if(get(r-dr,c-dc)||get(r+dr*w.length,c+dc*w.length))return -1;
+      for(let i=0;i<w.length;i++){
+        const rr=r+dr*i, cc=c+dc*i, ch=get(rr,cc);
+        if(ch){ if(ch!==w[i])return -1; cross++; }
+        else { if(get(rr+dc,cc+dr)||get(rr-dc,cc-dr))return -1; }
+      }
+      return cross;
+    }
+    function put(o){const dr=o.dir==="D"?1:0,dc=o.dir==="A"?1:0;for(let i=0;i<o.w.length;i++)cells[key(o.r+dr*i,o.c+dc*i)]=o.w[i];placed.push(o);}
+    put({...words[0],r:0,c:0,dir:"A"});
+    for(const wd of words.slice(1)){
+      if(placed.length>=6)break;
+      const opts=[];
+      for(const p of placed)for(let i=0;i<p.w.length;i++)for(let j=0;j<wd.w.length;j++){
+        if(p.w[i]!==wd.w[j])continue;
+        const dir=p.dir==="A"?"D":"A";
+        const r=p.dir==="A"?p.r-j:p.r+i, c=p.dir==="A"?p.c+i:p.c-j;
+        const x=fits(wd.w,r,c,dir); if(x>0)opts.push({...wd,r,c,dir,x});
+      }
+      if(!opts.length)continue;
+      const tmp=Object.keys(cells).map(k=>k.split(",").map(Number));
+      opts.forEach(o=>{ // prefer compact layouts
+        const rs=tmp.map(t=>t[0]).concat([o.r,o.r+(o.dir==="D"?o.w.length-1:0)]);
+        const cs=tmp.map(t=>t[1]).concat([o.c,o.c+(o.dir==="A"?o.w.length-1:0)]);
+        o.area=(Math.max(...rs)-Math.min(...rs)+1)*(Math.max(...cs)-Math.min(...cs)+1)-o.x*6+Math.random()*4;
+      });
+      opts.sort((a,b)=>a.area-b.area); put(opts[0]);
+    }
+    const ks=Object.keys(cells).map(k=>k.split(",").map(Number));
+    const H=Math.max(...ks.map(k=>k[0]))-Math.min(...ks.map(k=>k[0]))+1;
+    const W=Math.max(...ks.map(k=>k[1]))-Math.min(...ks.map(k=>k[1]))+1;
+    const score=placed.length*100-H*W-Math.abs(H-W)*8;
+    if(placed.length>=5&&W<=8&&H<=8&&(!best||score>best.score))best={placed,cells,score,H,W,minR:Math.min(...ks.map(k=>k[0])),minC:Math.min(...ks.map(k=>k[1]))};
+  }
+  return best;
+}
+function xwNew(){
+  const b=xwBuild(); if(!b)return xwNew();
+  const H=b.H,W=b.W, sol=Array.from({length:H},()=>Array(W).fill(null));
+  b.placed.forEach(p=>{p.r-=b.minR;p.c-=b.minC;});
+  b.placed.forEach(p=>{for(let i=0;i<p.w.length;i++){const r=p.r+(p.dir==="D"?i:0),c=p.c+(p.dir==="A"?i:0);sol[r][c]=p.w[i];}});
+  // number starts in reading order
+  const starts={}; let n=0;
+  b.placed.slice().sort((a,b)=>a.r-b.r||a.c-b.c).forEach(p=>{const k=p.r+","+p.c;if(!starts[k])starts[k]=++n;p.num=starts[k];});
+  Object.assign(XW,{grid:sol,H,W,words:b.placed,starts,dir:"A",cur:null,entry:Array.from({length:H},()=>Array(W).fill("")),done:false,checked:false});
+  xwRender(); el("xwStatus").textContent="";
+  const first=b.placed.find(p=>p.num===1); xwSelect(first.r,first.c,first.dir);
+}
+function xwWordAt(r,c,dir){return XW.words.find(p=>p.dir===dir&&(dir==="A"?p.r===r&&c>=p.c&&c<p.c+p.w.length:p.c===c&&r>=p.r&&r<p.r+p.w.length))}
+function xwRender(){
+  const g=el("xwGrid"); g.innerHTML=""; g.style.gridTemplateColumns=`repeat(${XW.W},1fr)`;
+  g.style.maxWidth=Math.min(XW.W*48,600)+"px";
+  for(let r=0;r<XW.H;r++)for(let c=0;c<XW.W;c++){
+    const d=document.createElement("div");
+    if(!XW.grid[r][c]){d.className="xw-cell block";g.appendChild(d);continue;}
+    d.className="xw-cell"; d.dataset.r=r; d.dataset.c=c;
+    const num=XW.starts[r+","+c]; if(num)d.innerHTML=`<span class="xw-num">${num}</span>`;
+    const s=document.createElement("span"); s.className="xw-letter"; s.textContent=XW.entry[r][c]; d.appendChild(s);
+    d.onclick=()=>{ if(XW.cur&&XW.cur[0]===r&&XW.cur[1]===c){const other=XW.dir==="A"?"D":"A";if(xwWordAt(r,c,other))XW.dir=other;} xwSelect(r,c,XW.dir); };
+    g.appendChild(d);
+  }
+  const list=dir=>XW.words.filter(p=>p.dir===dir).sort((a,b)=>a.num-b.num).map(p=>`<li data-k="${p.num}${dir}"><b>${p.num}</b> ${p.clue} <span class="xw-len">(${p.show.split(/[ -]/).map(x=>x.length).join(p.show.includes("-")?"-":",")})</span></li>`).join("");
+  el("xwAcross").innerHTML=list("A"); el("xwDown").innerHTML=list("D");
+  document.querySelectorAll("#xwAcross li,#xwDown li").forEach(li=>li.onclick=()=>{const p=XW.words.find(w=>w.num+w.dir===li.dataset.k);xwSelect(p.r,p.c,p.dir);});
+}
+function xwSelect(r,c,dir){
+  if(!xwWordAt(r,c,dir))dir=dir==="A"?"D":"A";
+  XW.cur=[r,c]; XW.dir=dir; const w=xwWordAt(r,c,dir);
+  document.querySelectorAll(".xw-cell").forEach(d=>{
+    const rr=+d.dataset.r, cc=+d.dataset.c; d.classList.remove("cur","word");
+    if(d.dataset.r===undefined)return;
+    if(w&&(dir==="A"?rr===w.r&&cc>=w.c&&cc<w.c+w.w.length:cc===w.c&&rr>=w.r&&rr<w.r+w.w.length))d.classList.add("word");
+    if(rr===r&&cc===c)d.classList.add("cur");
+  });
+  document.querySelectorAll("#xwAcross li,#xwDown li").forEach(li=>li.classList.toggle("on",w&&li.dataset.k===w.num+w.dir));
+  el("xwClue").innerHTML=w?`<b>${w.num} ${w.dir==="A"?"Across":"Down"}</b> ${w.clue}`:"";
+  const inp=el("xwInput"); inp.value=""; try{inp.focus({preventScroll:true})}catch(e){}
+}
+function xwCell(r,c){return document.querySelector(`.xw-cell[data-r="${r}"][data-c="${c}"]`)}
+function xwType(ch){
+  if(!XW.cur||XW.done)return; const [r,c]=XW.cur;
+  XW.entry[r][c]=ch; const cell=xwCell(r,c); cell.querySelector(".xw-letter").textContent=ch; cell.classList.remove("wrong");
+  const nr=r+(XW.dir==="D"?1:0), nc=c+(XW.dir==="A"?1:0);
+  if(XW.grid[nr]&&XW.grid[nr][nc])xwSelect(nr,nc,XW.dir);
+  xwCheckWin();
+}
+function xwBack(){
+  if(!XW.cur||XW.done)return; let [r,c]=XW.cur;
+  if(!XW.entry[r][c]){const pr=r-(XW.dir==="D"?1:0),pc=c-(XW.dir==="A"?1:0); if(XW.grid[pr]&&XW.grid[pr][pc]){r=pr;c=pc;xwSelect(r,c,XW.dir);}}
+  XW.entry[r][c]=""; xwCell(r,c).querySelector(".xw-letter").textContent=""; xwCell(r,c).classList.remove("wrong");
+}
+function xwMove(dr,dc){
+  if(!XW.cur)return; let [r,c]=XW.cur;
+  for(let i=0;i<12;i++){r+=dr;c+=dc; if(r<0||c<0||r>=XW.H||c>=XW.W)return; if(XW.grid[r][c]){xwSelect(r,c,dr?"D":"A");return;}}
+}
+function xwCheckWin(){
+  const ok=XW.grid.every((row,r)=>row.every((ch,c)=>!ch||XW.entry[r][c]===ch));
+  if(ok){XW.done=true; el("xwStatus").textContent="Solved! 🎉"; document.querySelectorAll(".xw-cell:not(.block)").forEach(d=>d.classList.add("right"));}
+}
+el("xwInput").addEventListener("input",e=>{const v=(e.target.value||"").toUpperCase().replace(/[^A-Z]/g,""); e.target.value=""; if(v)xwType(v.slice(-1));});
+el("xwInput").addEventListener("keydown",e=>{
+  if(e.key==="Backspace"){e.preventDefault();xwBack();}
+  else if(e.key==="ArrowRight"){e.preventDefault();xwMove(0,1);}
+  else if(e.key==="ArrowLeft"){e.preventDefault();xwMove(0,-1);}
+  else if(e.key==="ArrowDown"){e.preventDefault();xwMove(1,0);}
+  else if(e.key==="ArrowUp"){e.preventDefault();xwMove(-1,0);}
+  else if(/^[a-zA-Z]$/.test(e.key)){e.preventDefault();xwType(e.key.toUpperCase());}
+});
+el("xwCheck").onclick=()=>{
+  let wrong=0;
+  XW.grid.forEach((row,r)=>row.forEach((ch,c)=>{if(ch&&XW.entry[r][c]&&XW.entry[r][c]!==ch){xwCell(r,c).classList.add("wrong");wrong++;}}));
+  el("xwStatus").textContent=wrong?`${wrong} letter${wrong>1?"s":""} not right yet`:"Everything so far is correct ✔";
+  xwCheckWin();
+};
+el("xwRevealWord").onclick=()=>{
+  if(!XW.cur||XW.done)return; const w=xwWordAt(XW.cur[0],XW.cur[1],XW.dir); if(!w)return;
+  for(let i=0;i<w.w.length;i++){const r=w.r+(w.dir==="D"?i:0),c=w.c+(w.dir==="A"?i:0);XW.entry[r][c]=w.w[i];const d=xwCell(r,c);d.querySelector(".xw-letter").textContent=w.w[i];d.classList.remove("wrong");d.classList.add("revealed");}
+  xwCheckWin();
+};
+el("xwRevealAll").onclick=()=>{
+  XW.grid.forEach((row,r)=>row.forEach((ch,c)=>{if(ch){XW.entry[r][c]=ch;const d=xwCell(r,c);d.querySelector(".xw-letter").textContent=ch;d.classList.remove("wrong");}}));
+  XW.done=true; el("xwStatus").textContent="Answers revealed";
+};
+el("xwNew").onclick=xwNew;
+
+// ================= Wordle =================
+const WORDLE_EXTRA = [
+  ["PLATE","Tectonic ___: moves on the mantle"],["GENES","Specific sequences of DNA bases"],["ERROR","Random or systematic ___"],
+  ["MODEL","Watson and Crick built one of DNA"],["ATOMS","Rutherford showed these are mostly empty space"],["LIGHT","Reflected and refracted in optical technologies"],
+  ["FORCE","Newton's first law: no net ___ means constant velocity"],["BOSON","Higgs ___"],["DECAY","Radioactive ___ produces gamma rays"],
+  ["SCALE","Mistakes reading this cause measurement errors"],["CRICK","Watson and ___"],["WATSON","___ and Crick"],
+  ["HELIUM","Alpha particles are this type of nucleus"],["SPEED","Distance ÷ time"],["VOLUME","Boyle's and Charles' laws predict this for a gas"],
+  ["CRYSTAL","X-rays are diffracted by the atoms in one"],["KIDNEY","Knowing how it filters blood led to dialysis"],["RATE","Rate of reaction: how quickly a reaction happens"],
+  ["MEAN","Calculate one from repeated results"],["ORES","Uranium ___ fogged photographic plates"],["PLANTS","Bioharvested for food and medicine"],
+  ["GUIDE","WHS guidelines help you assess safety"]
+].filter(w=>w[0]!=="GUIDE");
+// Single words only (no spaces or hyphens), 4–10 letters
+const WORDLE=[...BANK.filter(b=>/^[A-Z]+$/.test(b.show)).map(b=>[b.show,b.clue]),...WORDLE_EXTRA]
+  .filter((w,i,arr)=>w[0].length>=4&&w[0].length<=10&&arr.findIndex(x=>x[0]===w[0])===i);
+const WD={answer:null};
+function wdNew(){
+  const pick=WORDLE[Math.floor(Math.random()*WORDLE.length)];
+  if(WD.answer===pick[0]&&WORDLE.length>1)return wdNew();
+  Object.assign(WD,{answer:pick[0],clue:pick[1],n:pick[0].length,rows:[],cur:"",done:false,keys:{}});
+  el("wdLen").textContent=pick[0].length+" letters";
+  el("wdClue").textContent=""; el("wdStatus").textContent=""; el("wdHintBtn").disabled=false;
+  wdRender();
+}
+function wdScore(guess,ans){
+  const n=ans.length, res=Array(n).fill("absent"), left={};
+  for(let i=0;i<n;i++){if(guess[i]===ans[i])res[i]="correct";else left[ans[i]]=(left[ans[i]]||0)+1;}
+  for(let i=0;i<n;i++){if(res[i]!=="correct"&&left[guess[i]]){res[i]="present";left[guess[i]]--;}}
+  return res;
+}
+function wdRender(){
+  const b=el("wdBoard"); b.innerHTML=""; b.style.setProperty("--n",WD.n);
+  for(let r=0;r<6;r++){
+    const row=document.createElement("div"); row.className="wd-row";
+    const data=WD.rows[r]; const txt=data?data.g:(r===WD.rows.length?WD.cur:"");
+    for(let i=0;i<WD.n;i++){const t=document.createElement("div");t.className="wd-tile"+(data?" "+data.s[i]:(txt[i]?" filled":""));t.textContent=txt[i]||"";row.appendChild(t);}
+    b.appendChild(row);
+  }
+  const kb=el("wdKeys"); kb.innerHTML="";
+  ["QWERTYUIOP","ASDFGHJKL","⏎ZXCVBNM⌫"].forEach(line=>{
+    const row=document.createElement("div"); row.className="wd-krow";
+    [...line].forEach(k=>{const btn=document.createElement("button");btn.className="wd-key "+(WD.keys[k]||"")+(k==="⏎"||k==="⌫"?" wide":"");btn.textContent=k==="⏎"?"Enter":k;btn.onclick=()=>wdKey(k);row.appendChild(btn);});
+    kb.appendChild(row);
+  });
+}
+function wdKey(k){
+  if(WD.done)return;
+  if(k==="⌫"){WD.cur=WD.cur.slice(0,-1);}
+  else if(k==="⏎"){
+    if(WD.cur.length<WD.n){el("wdStatus").textContent="Not enough letters";return;}
+    const s=wdScore(WD.cur,WD.answer); WD.rows.push({g:WD.cur,s});
+    const rank={absent:0,present:1,correct:2};
+    [...WD.cur].forEach((ch,i)=>{if(!WD.keys[ch]||rank[s[i]]>rank[WD.keys[ch]])WD.keys[ch]=s[i];});
+    if(WD.cur===WD.answer){WD.done=true;el("wdStatus").textContent=["Genius!","Magnificent!","Impressive!","Splendid!","Great!","Phew!"][WD.rows.length-1]+" 🎉";el("wdClue").textContent=WD.clue;}
+    else if(WD.rows.length===6){WD.done=true;el("wdStatus").textContent="The word was "+WD.answer;el("wdClue").textContent=WD.clue;}
+    else el("wdStatus").textContent="";
+    WD.cur="";
+  } else if(WD.cur.length<WD.n&&/^[A-Z]$/.test(k)){WD.cur+=k;el("wdStatus").textContent="";}
+  wdRender();
+}
+el("wdHintBtn").onclick=()=>{el("wdClue").textContent="💡 "+WD.clue;el("wdHintBtn").disabled=true;};
+el("wdNew").onclick=wdNew;
+
+// ================= Hangman =================
+const HM={word:null};
+function hmNew(){
+  let pick; do{pick=BANK[Math.floor(Math.random()*BANK.length)];}while(pick.show===HM.word&&BANK.length>1);
+  Object.assign(HM,{word:pick.show,clue:pick.clue,guessed:new Set(),wrong:0,done:false});
+  el("hmStatus").textContent=""; el("hmClue").textContent=""; el("hmHintBtn").disabled=false; hmRender();
+}
+function hmRender(){
+  el("hmWord").innerHTML=[...HM.word].map(ch=>/[A-Z]/.test(ch)?`<span class="hm-l">${HM.guessed.has(ch)||HM.done?ch:""}</span>`:(ch===" "?`<span class="hm-gap"></span>`:`<span class="hm-sym">${ch}</span>`)).join("");
+  document.querySelectorAll(".hm-part").forEach((p,i)=>p.style.visibility=i<HM.wrong?"visible":"hidden");
+  el("hmLives").textContent=`Wrong guesses left: ${6-HM.wrong}`;
+  const kb=el("hmKeys"); kb.innerHTML="";
+  [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"].forEach(k=>{
+    const b=document.createElement("button"); b.textContent=k; b.className="wd-key hm-key";
+    if(HM.guessed.has(k))b.classList.add(HM.word.includes(k)?"correct":"absent");
+    b.disabled=HM.guessed.has(k)||HM.done; b.onclick=()=>hmGuess(k); kb.appendChild(b);
+  });
+}
+function hmGuess(k){
+  if(HM.done||HM.guessed.has(k))return; HM.guessed.add(k);
+  if(!HM.word.includes(k))HM.wrong++;
+  const solved=[...letters(HM.word)].every(ch=>HM.guessed.has(ch));
+  if(solved){HM.done=true;el("hmStatus").textContent="You got it! 🎉";el("hmClue").textContent=HM.clue;}
+  else if(HM.wrong>=6){HM.done=true;el("hmStatus").textContent="Out of guesses! The answer was "+HM.word;el("hmClue").textContent=HM.clue;}
+  hmRender();
+}
+el("hmHintBtn").onclick=()=>{el("hmClue").textContent="💡 "+HM.clue;el("hmHintBtn").disabled=true;};
+el("hmNew").onclick=hmNew;
+
+// ================= 10 Hints =================
+const TEN = [
+ {answer:"Photo 51", accept:["photo 51","photo51","photo fifty one","photograph 51"], hints:[
+  "I'm an image, not a machine.","I was made in the early 1950s.","I was made by passing X-rays through a sample.",
+  "The X-rays were diffracted by the atoms in a crystal.","My pattern looks like a big X.","Rosalind Franklin's work produced me.",
+  "I showed that DNA is helical and tightly packed.","I was evidence for Watson and Crick's model.","I'm a classic example of technology providing evidence for a model.",
+  "My name is 'Photo' followed by a number."]},
+ {answer:"Geiger–Müller counter", accept:["geiger muller counter","geiger counter","geiger mueller counter","gm counter","geiger muller tube","geiger"], hints:[
+  "I'm a detector.","You often hear me before you read me.","I contain a gas-filled tube.",
+  "I register a pulse each time radiation passes through me.","I make a clicking sound.","I detect radioactive emissions.",
+  "I'm named after two physicists.","I helped identify alpha particles.","I'm a technology that helped develop atomic theory.",
+  "My name starts with 'Geiger'."]},
+ {answer:"Base isolation", accept:["base isolation","base isolators","base isolator","base isolation system"], hints:[
+  "I'm an engineering technology.","I'm hidden underneath where you'd never see me.","I rest something on shock-absorbing objects.",
+  "I make a building 'float' above its base.","I let the ground move while the thing above stays still.","I rely on inertia.",
+  "Newton's first law explains how I work.","I protect buildings during earthquakes.","I'm an example of science driving technology.",
+  "My name is two words: the bottom of something + being kept apart."]},
+ {answer:"Radiotherapy", accept:["radiotherapy","radiation therapy","radiation treatment"], hints:[
+  "I'm used in hospitals.","I came from discoveries about the atom.","I use something that is highly penetrating.",
+  "I'm aimed at specific cells.","I can also harm healthy cells.","I use gamma rays.",
+  "Radioactive decay produces what I use.","I'm a treatment for cancer.","I'm one of the technologies developed from radioactivity (the other is nuclear bombs).",
+  "My name is 'radio' + a word meaning treatment."]},
+ {answer:"Optic fibres", accept:["optic fibres","optic fibre","optical fibre","optical fiber","optical fibres","optic fiber","fibre optic","fiber optic","fibre optics"], hints:[
+  "I'm very thin.","I'm usually made of glass or plastic.","I'm used in telecommunications and data transmission.",
+  "I connect computers in different locations over long distances.","The military and space industries use me for communication.","I don't suffer from electromagnetic interference.",
+  "I light up the inside of the body in medical instruments.","I carry light.","I was developed from the law of reflection.",
+  "My name: 'optic' + thread-like strands."]},
+ {answer:"Hadron collider", accept:["hadron collider","large hadron collider","lhc","particle accelerator"], hints:[
+  "I'm a huge machine.","I'm run by CERN.","I can recreate conditions from a billionth of a second after the Big Bang.",
+  "I'm a type of particle accelerator.","I speed up elementary particles such as protons to very high energies.","I smash particles together.",
+  "I helped confirm the Standard Model.","I found the Higgs boson.","I'm a technology that provided evidence for a theory.",
+  "My initials are LHC."]},
+ {answer:"Plasmid", accept:["plasmid","plasmids"], hints:[
+  "I'm very small.","I'm round.","I'm made of DNA.",
+  "I'm found in bacteria.","Scientists can cut me open.","A gene from another species can be inserted into me.",
+  "I carry new genes into bacteria.","I'm used in recombinant DNA technology.","I'm part of how transgenic organisms are made.",
+  "I'm a small ring of DNA starting with 'P'."]},
+ {answer:"Rutherford", accept:["rutherford","ernest rutherford","lord rutherford"], hints:[
+  "I'm a person.","I worked on the structure of the atom.","I used a technology that detects radioactive emissions.",
+  "I aimed a beam of particles at something very thin.","The thin sheet was made of gold.","A screen around it flashed when hit.",
+  "Most particles passed straight through.","I showed atoms have a small, massive, positive nucleus.","My results opposed Thomson's plum pudding model.",
+  "My first name is Ernest."]},
+ {answer:"Emu bush", accept:["emu bush","emubush","emu bushes"], hints:[
+  "I'm a living thing.","I'm native to Australia.","I'm a plant.",
+  "I'm named after a large flightless bird.","Aboriginal people have used me as medicine.","I've been used to create a sterile environment.",
+  "I've been used as a decoction for sores.","I've been used as an infusion for headaches and colds.","I'm an example of bush medicine.",
+  "My name: Emu + a word for a shrub."]},
+ {answer:"Calibration", accept:["calibration","calibrate","recalibration","recalibrate","poor calibration"], hints:[
+  "I'm a process, not a device.","Every measuring device needs me.","Without me, readings can be consistently wrong.",
+  "When I'm poor, technology can fail to give reliable results.","I'm linked to systematic error.","A faulty device needs me again.",
+  "I compare an instrument against a known value.","I improve accuracy.","The fix for my problem: 're' + me.",
+  "I start with 'cali'."]},
+ {answer:"Half-life", accept:["half life","halflife","half-life"], hints:[
+  "I'm a measurement of time.","I'm about atoms.","I'm different for every radioactive isotope.",
+  "I'm linked to the radioactive decay law.","Decay is random, but I'm predictable for a large sample.","After two of me, a quarter of the sample remains.",
+  "I'm used to understand radioactive decay.","I'm the time for half of a radioactive sample to decay.","My name has a hyphen.",
+  "My name: a fraction + 'life'."]},
+ {answer:"Sphero", accept:["sphero","spheros","sphero robot"], hints:[
+  "I'm a technology.","I'm round.","I'm controlled with an app.",
+  "You connect to me by tapping your device on me.","I flash a colour when I connect.","You can draw a path for me to follow.",
+  "I'm a small robot.","I'm used to investigate speed on distance travelled.","Distance = speed × time when you use me.",
+  "My name sounds like 'sphere'."]}
+];
+const TH={item:null, total:0, played:0, order:[]};
+const norm=s=>s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9]/g,"");
+function lev(a,b){const d=Array.from({length:a.length+1},(_,i)=>[i]);for(let j=1;j<=b.length;j++)d[0][j]=j;for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[a.length][b.length]}
+function thNew(){
+  if(!TH.order.length)TH.order=shuf(TEN.map((_,i)=>i));
+  TH.item=TEN[TH.order.pop()]; TH.shown=1; TH.done=false; TH.tries=[];
+  el("thGuess").value=""; el("thGuess").disabled=false; el("thStatus").textContent=""; el("thAnswer").textContent="";
+  thRender();
+}
+function thRender(){
+  el("thList").innerHTML=TH.item.hints.map((h,i)=>`<li class="${i<TH.shown?"":"hidden-hint"}"><span class="th-n">${i+1}</span>${i<TH.shown?h:"?"}</li>`).join("");
+  el("thPoints").textContent=TH.done?"":`Worth ${11-TH.shown} point${11-TH.shown===1?"":"s"} if you get it now`;
+  el("thMore").disabled=TH.done||TH.shown>=10; el("thSubmit").disabled=TH.done; el("thGive").disabled=TH.done;
+  el("thScore").textContent=`Score: ${TH.total}  ·  Played: ${TH.played}`;
+}
+function thEnd(win){
+  TH.done=true; TH.played++; if(win)TH.total+=11-TH.shown;
+  TH.shown=10; el("thGuess").disabled=true;
+  el("thAnswer").textContent=(win?"✔ ":"")+"Answer: "+TH.item.answer;
+  thRender();
+}
+function thCheck(){
+  if(TH.done)return; const g=norm(el("thGuess").value); if(!g)return;
+  const ok=TH.item.accept.some(a=>{const n=norm(a);return n===g||(n.length>5&&lev(n,g)<=1);});
+  if(ok){el("thStatus").textContent=`Correct! +${11-TH.shown} points 🎉`;thEnd(true);}
+  else{
+    el("thStatus").textContent=`"${el("thGuess").value}" isn't it.`+(TH.shown<10?" Here's another hint.":"");
+    el("thGuess").value="";
+    if(TH.shown<10)TH.shown++; else {el("thStatus").textContent="Out of hints!";thEnd(false);return;}
+    thRender();
+  }
+}
+el("thSubmit").onclick=thCheck;
+el("thGuess").addEventListener("keydown",e=>{if(e.key==="Enter")thCheck();});
+el("thMore").onclick=()=>{if(TH.shown<10){TH.shown++;el("thStatus").textContent="";thRender();}};
+el("thGive").onclick=()=>{el("thStatus").textContent="No worries, here's the answer.";thEnd(false);};
+el("thNew").onclick=thNew;
+
+// Physical keyboard for Wordle
+document.addEventListener("keydown",e=>{
+  if(activeGame!=="wordle"||e.ctrlKey||e.metaKey||e.altKey)return;
+  // preventDefault stops Enter from also "clicking" whichever button was last pressed
+  if(e.key==="Enter"){e.preventDefault();wdKey("⏎");}
+  else if(e.key==="Backspace"){e.preventDefault();wdKey("⌫");}
+  else if(/^[a-zA-Z]$/.test(e.key)){e.preventDefault();wdKey(e.key.toUpperCase());}
+});
+// Physical keyboard for Hangman
+document.addEventListener("keydown",e=>{
+  if(activeGame!=="hang"||e.ctrlKey||e.metaKey||e.altKey)return;
+  if(/^[a-zA-Z]$/.test(e.key))hmGuess(e.key.toUpperCase());
+});
+
+
+// Two terms clash if one contains the other (e.g. HELIX / DOUBLE HELIX), so they never appear as rival answers
+const clashTerms=(a,b)=>{const x=letters(a.show),y=letters(b.show);return x.includes(y)||y.includes(x);};
+// ================= Word Search =================
+const WS={};
+function wsNew(){
+  const N=10, dirs=[[0,1],[1,0],[1,1],[-1,1],[0,-1],[1,-1]];
+  for(let attempt=0;attempt<50;attempt++){
+    const pool=shuf(BANK.filter(b=>/^[A-Z]+$/.test(b.show)&&b.show.length>=4&&b.show.length<=9));
+    const g=Array.from({length:N},()=>Array(N).fill("")), placed=[];
+    for(const b of pool){
+      if(placed.length>=8)break;
+      const w=b.show; let ok=false;
+      for(let t=0;t<120&&!ok;t++){
+        const [dr,dc]=dirs[Math.floor(Math.random()*dirs.length)];
+        const r=Math.floor(Math.random()*N), c=Math.floor(Math.random()*N);
+        const er=r+dr*(w.length-1), ec=c+dc*(w.length-1);
+        if(er<0||er>=N||ec<0||ec>=N)continue;
+        let fits=true;
+        for(let i=0;i<w.length;i++){const ch=g[r+dr*i][c+dc*i];if(ch&&ch!==w[i]){fits=false;break;}}
+        if(!fits)continue;
+        for(let i=0;i<w.length;i++)g[r+dr*i][c+dc*i]=w[i];
+        placed.push({w,clue:b.clue,r,c,dr,dc,found:false}); ok=true;
+      }
+    }
+    if(placed.length<8)continue;
+    const A="ABCDEFGHIJKLMNOPRSTUVWY";
+    for(let r=0;r<N;r++)for(let c=0;c<N;c++)if(!g[r][c])g[r][c]=A[Math.floor(Math.random()*A.length)];
+    Object.assign(WS,{N,g,words:placed.sort((a,b)=>a.w.localeCompare(b.w)),start:null,found:new Set(),showClues:false});
+    el("wsStatus").textContent="Tap the first letter of a word, then its last letter.";
+    wsRender(); return;
+  }
+}
+function wsRender(){
+  const grid=el("wsGrid"); grid.innerHTML=""; grid.style.gridTemplateColumns=`repeat(${WS.N},1fr)`;
+  const foundCells=new Set();
+  WS.words.filter(w=>w.found).forEach(w=>{for(let i=0;i<w.w.length;i++)foundCells.add((w.r+w.dr*i)+","+(w.c+w.dc*i));});
+  for(let r=0;r<WS.N;r++)for(let c=0;c<WS.N;c++){
+    const d=document.createElement("button"); d.className="ws-cell"; d.textContent=WS.g[r][c];
+    if(foundCells.has(r+","+c))d.classList.add("found");
+    if(WS.start&&WS.start[0]===r&&WS.start[1]===c)d.classList.add("start");
+    d.onclick=()=>wsTap(r,c); grid.appendChild(d);
+  }
+  el("wsList").innerHTML=WS.words.map(w=>`<li class="${w.found?"done":""}">${WS.showClues&&!w.found?w.clue:w.w}</li>`).join("");
+  el("wsCount").textContent=`${WS.words.filter(w=>w.found).length} / ${WS.words.length} found`;
+}
+function wsTap(r,c){
+  if(!WS.start){WS.start=[r,c];wsRender();return;}
+  const [r0,c0]=WS.start; WS.start=null;
+  const hit=WS.words.find(w=>!w.found&&((w.r===r0&&w.c===c0&&w.r+w.dr*(w.w.length-1)===r&&w.c+w.dc*(w.w.length-1)===c)||(w.r===r&&w.c===c&&w.r+w.dr*(w.w.length-1)===r0&&w.c+w.dc*(w.w.length-1)===c0)));
+  if(hit){hit.found=true; const all=WS.words.every(w=>w.found);
+    el("wsStatus").textContent=all?"All words found! 🎉":`Found ${hit.w}! ✔`;}
+  else if(!(r===r0&&c===c0)) el("wsStatus").textContent="Not a word. Try again.";
+  wsRender();
+}
+el("wsClues").onclick=()=>{WS.showClues=!WS.showClues;el("wsClues").textContent=WS.showClues?"Show words":"Hard mode: show clues";wsRender();};
+el("wsNew").onclick=()=>{WS.showClues=false;el("wsClues").textContent="Hard mode: show clues";wsNew();};
+
+// ================= Word Scramble =================
+const SC={score:0,streak:0,best:0};
+function scNew(){
+  const pool=BANK.filter(b=>/^[A-Z]+$/.test(b.show)&&b.show.length>=5&&b.show.length<=10);
+  let p; do{p=pool[Math.floor(Math.random()*pool.length)];}while(p.show===SC.word&&pool.length>1);
+  let mixed; do{mixed=shuf([...p.show]).join("");}while(mixed===p.show);
+  Object.assign(SC,{word:p.show,clue:p.clue,mixed,done:false,hinted:0});
+  el("scLetters").innerHTML=[...mixed].map(ch=>`<span class="sc-tile">${ch}</span>`).join("");
+  el("scClue").textContent=p.clue; el("scGuess").value=""; el("scGuess").disabled=false;
+  el("scStatus").textContent=""; el("scHelp").textContent=""; scScore();
+}
+function scScore(){el("scScore").textContent=`Score: ${SC.score}  ·  Streak: ${SC.streak}  ·  Best streak: ${SC.best}`;}
+function scCheck(){
+  if(SC.done)return; const g=el("scGuess").value.toUpperCase().replace(/[^A-Z]/g,""); if(!g)return;
+  if(g===SC.word){SC.done=true;SC.score+=Math.max(1,3-SC.hinted);SC.streak++;SC.best=Math.max(SC.best,SC.streak);
+    el("scStatus").textContent="Correct! 🎉"; el("scLetters").innerHTML=[...SC.word].map(ch=>`<span class="sc-tile correct">${ch}</span>`).join(""); el("scGuess").disabled=true; scScore();
+    setTimeout(()=>{if(SC.done&&activeGame==="scramble")scNew();},1400);}
+  else{el("scStatus").textContent="Not quite. Keep trying!";SC.streak=0;scScore();}
+}
+el("scSubmit").onclick=scCheck;
+el("scGuess").addEventListener("keydown",e=>{if(e.key==="Enter")scCheck();});
+el("scShuffle").onclick=()=>{if(SC.done)return;SC.mixed=shuf([...SC.mixed]).join("");el("scLetters").innerHTML=[...SC.mixed].map(ch=>`<span class="sc-tile">${ch}</span>`).join("");};
+el("scHint").onclick=()=>{if(SC.done)return;SC.hinted=Math.min(SC.hinted+1,SC.word.length-1);el("scHelp").textContent="Starts with: "+SC.word.slice(0,SC.hinted);};
+el("scSkip").onclick=()=>{if(!SC.done){SC.streak=0;el("scStatus").textContent="It was "+SC.word;SC.done=true;el("scGuess").disabled=true;scScore();setTimeout(()=>{if(activeGame==="scramble")scNew();},1600);}};
+
+// ================= Memory Match =================
+const MM={};
+function mmNew(){
+  const picks=[]; for(const b of shuf(BANK.filter(b=>b.clue.length<=62))){if(picks.length<6&&!picks.some(p=>clashTerms(p,b)))picks.push(b);}
+  const cards=shuf(picks.flatMap((b,i)=>[{pair:i,text:b.show,kind:"term"},{pair:i,text:b.clue,kind:"clue"}]));
+  Object.assign(MM,{cards,open:[],matched:new Set(),moves:0,lock:false});
+  el("mmStatus").textContent="Match each term with its clue."; mmRender();
+}
+function mmRender(){
+  const g=el("mmGrid"); g.innerHTML="";
+  MM.cards.forEach((c,i)=>{
+    const b=document.createElement("button");
+    const up=MM.open.includes(i)||MM.matched.has(c.pair);
+    b.className="mm-card"+(up?" up "+c.kind:"")+(MM.matched.has(c.pair)?" matched":"");
+    b.innerHTML=up?`<span>${c.text}</span>`:"<span>?</span>";
+    b.onclick=()=>mmFlip(i); g.appendChild(b);
+  });
+  el("mmMoves").textContent=`Moves: ${MM.moves}  ·  Pairs: ${MM.matched.size} / 6`;
+}
+function mmFlip(i){
+  if(MM.lock||MM.open.includes(i)||MM.matched.has(MM.cards[i].pair))return;
+  MM.open.push(i); mmRender();
+  if(MM.open.length===2){
+    MM.moves++; const [a,b]=MM.open;
+    if(MM.cards[a].pair===MM.cards[b].pair){MM.matched.add(MM.cards[a].pair);MM.open=[];mmRender();
+      if(MM.matched.size===6)el("mmStatus").textContent=`All matched in ${MM.moves} moves! 🎉`;}
+    else{MM.lock=true;mmRender();setTimeout(()=>{MM.open=[];MM.lock=false;mmRender();},1100);}
+  }
+}
+el("mmNew").onclick=mmNew;
+
+// ================= Speed Quiz =================
+const SQ={best:0,running:false};
+try{SQ.best=+localStorage.getItem("m6-sq-best")||0}catch(e){}
+function sqStart(){
+  clearInterval(SQ.timer);
+  Object.assign(SQ,{score:0,left:60,running:true,asked:0,wrong:[]});
+  el("sqStart").textContent="Restart"; el("sqEnd").innerHTML=""; sqQ(); sqTick();
+  SQ.timer=setInterval(()=>{SQ.left--;sqTick();if(SQ.left<=0)sqStop();},1000);
+}
+function sqTick(){el("sqTime").textContent=`⏱ ${SQ.left}s`;el("sqTime").classList.toggle("low",SQ.left<=10);el("sqScore").textContent=`Score: ${SQ.score}  ·  Best: ${SQ.best}`;}
+function sqQ(){
+  const ans=BANK[Math.floor(Math.random()*BANK.length)];
+  const others=[]; for(const b of shuf(BANK.filter(b=>b!==ans&&!clashTerms(b,ans)))){if(others.length<3&&!others.some(o=>clashTerms(o,b)))others.push(b);}
+  const opts=shuf([ans,...others]);
+  SQ.cur=ans; el("sqClue").textContent=ans.clue;
+  el("sqOpts").innerHTML="";
+  opts.forEach(o=>{const b=document.createElement("button");b.className="sq-opt";b.textContent=o.show;
+    b.onclick=()=>{ if(!SQ.running)return;
+      if(o===ans){SQ.score++;b.classList.add("correct");} else {b.classList.add("absent");SQ.wrong.push(ans);SQ.left=Math.max(0,SQ.left-3);
+        [...el("sqOpts").children].forEach(x=>{if(x.textContent===ans.show)x.classList.add("correct")});}
+      SQ.running=false; sqTick(); setTimeout(()=>{if(SQ.left>0){SQ.running=true;sqQ();}},o===ans?250:700);
+    };
+    el("sqOpts").appendChild(b);});
+}
+function sqStop(){
+  clearInterval(SQ.timer); SQ.timer=null; SQ.running=false; SQ.left=0;
+  if(SQ.score>SQ.best){SQ.best=SQ.score;try{localStorage.setItem("m6-sq-best",SQ.best)}catch(e){}}
+  sqTick(); el("sqClue").textContent=""; el("sqOpts").innerHTML="";
+  const rev=[...new Map(SQ.wrong.map(w=>[w.show,w])).values()];
+  el("sqEnd").innerHTML=`<div class="sq-final">Time's up! You scored ${SQ.score} 🎉</div>`+(rev.length?`<div class="sq-rev"><b>Revise these:</b><ul>${rev.map(w=>`<li><b>${w.show}</b>: ${w.clue}</li>`).join("")}</ul></div>`:"");
+  el("sqStart").textContent="Play again";
+}
+el("sqStart").onclick=sqStart;
+
+// ================= Sort It =================
+const SORT_ITEMS=[
+  {t:"X-ray diffraction (Photo 51) and the double helix model", a:"TS", why:"X-ray diffraction images were evidence for Watson and Crick's double helix."},
+  {t:"Wilson cloud chambers and types of radiation", a:"TS", why:"Cloud chamber tracks gave evidence about the particles given off in radioactive decay."},
+  {t:"Gold foil apparatus and the nuclear model of the atom", a:"TS", why:"The gold foil results were evidence for a small, massive, positive nucleus."},
+  {t:"Photographic plates and the discovery of radioactivity", a:"TS", why:"Plates fogged by uranium ores revealed radioactivity, advancing atomic theory."},
+  {t:"Computer simulations and plate tectonic theory", a:"TS", why:"Simulations of mantle flow and fault zones gave evidence supporting plate tectonics."},
+  {t:"The Hadron collider and the Higgs boson", a:"TS", why:"The particle accelerator found the Higgs boson, supporting the Standard Model."},
+  {t:"Geiger–Müller counters and the alpha particle", a:"TS", why:"G–M counters helped identify alpha particles, advancing atomic theory."},
+  {t:"The law of refraction and the microscope", a:"ST", why:"Understanding refraction allowed microscopes to make magnified images."},
+  {t:"The law of reflection and optic fibres", a:"ST", why:"Understanding reflection led to optic fibres for telecommunications and medicine."},
+  {t:"Reflection, refraction and adaptive optics telescopes", a:"ST", why:"Both laws let modern telescopes correct for atmospheric distortion."},
+  {t:"Radioactive decay and radiotherapy", a:"ST", why:"Knowing decay produces gamma rays led to beams that kill cancer cells."},
+  {t:"Radioactivity and nuclear bombs (Little Boy)", a:"ST", why:"Understanding radioactivity led to the Manhattan Project's nuclear weapons."},
+  {t:"Knowing DNA contains genes and recombinant DNA", a:"ST", why:"Knowing genes are base sequences allowed them to be cut and inserted."},
+  {t:"Knowing DNA is unique and forensic DNA matching", a:"ST", why:"Knowing each person's base sequence is unique led to forensic technology."},
+  {t:"Newton's first law and base isolation", a:"ST", why:"Inertia holds base-isolated buildings still while the ground shakes."},
+  {t:"Knowing how kidneys filter blood and dialysis machines", a:"ST", why:"From the slides: understanding kidneys led to dialysis machines."}
+];
+const SO={};
+function soNew(){
+  Object.assign(SO,{items:shuf([...SORT_ITEMS]).slice(0,10),i:0,score:0,done:false});
+  el("soEnd").innerHTML=""; soShow();
+}
+function soShow(){
+  if(SO.i>=SO.items.length){SO.done=true;el("soCard").innerHTML="";el("soBtns").hidden=true;el("soFeedback").textContent="";
+    el("soEnd").innerHTML=`<div class="sq-final">You sorted ${SO.score} / ${SO.items.length} correctly ${SO.score>=8?"🎉":""}</div>`;soCount();return;}
+  el("soBtns").hidden=false; el("soCard").innerHTML=`<div class="so-card">${SO.items[SO.i].t}</div>`; soCount();
+}
+function soCount(){el("soProgress").textContent=`Card ${Math.min(SO.i+1,SO.items.length)} of ${SO.items.length}  ·  Score: ${SO.score}`;}
+function soAnswer(a){
+  if(SO.done||SO.lock)return; const it=SO.items[SO.i], ok=it.a===a; if(ok)SO.score++;
+  el("soFeedback").innerHTML=(ok?"✔ Correct! ":"✘ Not quite. ")+it.why;
+  el("soFeedback").className="so-feedback "+(ok?"good":"bad");
+  SO.lock=true; SO.i++; soCount();
+  setTimeout(()=>{SO.lock=false;soShow();},ok?1300:2600);
+}
+el("soTS").onclick=()=>soAnswer("TS");
+el("soST").onclick=()=>soAnswer("ST");
+el("soNew").onclick=soNew;
+
+// register the new games with the menu
+Object.assign(GAMES,{search:"Word Search",scramble:"Word Scramble",memory:"Memory Match",speed:"Speed Quiz",sort:"Sort It"});
+const _showGame=showGame;
+showGame=function(key){
+  if(activeGame==="speed"&&key!=="speed"&&SQ.timer&&SQ.left>0)sqStop();
+  _showGame(key);
+  if(key==="search"&&!WS.g)wsNew();
+  if(key==="scramble"&&!SC.word)scNew();
+  if(key==="memory"&&!MM.cards)mmNew();
+  if(key==="speed"&&!SQ.timer){el("sqClue").textContent="Pick the term that matches each clue. You get 60 seconds, and a wrong answer costs 3 seconds.";sqTick();el("sqTime").textContent="⏱ 60s";}
+  if(key==="sort"&&!SO.items)soNew();
+};
+document.querySelectorAll("[data-game]").forEach(b=>b.onclick=()=>showGame(b.dataset.game));
+el("backBtn").onclick=()=>{showGame(null);activeGame=null;};
+
+
+// Direct links: e.g. ...#connect opens the Connection game straight away
+const _show2=showGame;
+showGame=function(key){
+  _show2(key);
+  try{history.replaceState(null,"",key&&GAMES[key]?"#"+key:location.pathname+location.search);}catch(e){}
+};
+document.querySelectorAll("[data-game]").forEach(b=>b.onclick=()=>showGame(b.dataset.game));
+el("backBtn").onclick=()=>{showGame(null);activeGame=null;};
+function routeFromHash(){const k=location.hash.slice(1); if(GAMES[k]){if(k!==activeGame)showGame(k);} else if(activeGame){showGame(null);activeGame=null;}}
+window.addEventListener("hashchange",routeFromHash);
+routeFromHash();
 </script>
 </body>
 </html>

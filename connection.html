@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Investigating Science Module 6: technologies Connection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef; --ink:#1d1d1f; --muted:#6b6b70; --tile:#e7e3d8; --tile-sel:#4a4a52;
+  --card:#fff; --btn:#fff; --line:#ddd; --dotlost:#ccc;
+  --g0:#f2d65c; --g1:#9fc77a; --g2:#9cc0ea; --g3:#bf9fdc; --herring:#ef7f6c;
+}
+html[data-theme="dark"]{--bg:#16171b;--ink:#ecebe6;--muted:#a0a0a8;--tile:#2c2d34;--tile-sel:#d9d7cf;--card:#202127;--btn:#202127;--line:#34353c;--dotlost:#44454c;
+  --g0:#e3c64a;--g1:#8fb86b;--g2:#87aedb;--g3:#ad8ccc;--herring:#e06f5d}
+html[data-theme="dark"] .tile.sel{color:#16171b}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+.wrap{max-width:640px;margin:0 auto;padding:20px 16px 60px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:24px}
+#themeBtn{border:2px solid var(--ink);background:var(--btn);color:var(--ink);border-radius:999px;padding:5px 10px;font:600 15px Inter,sans-serif;cursor:pointer;white-space:nowrap;margin-top:4px}
+header h1{font-size:clamp(22px,4vw,32px);margin:4px 0 2px;font-weight:800;letter-spacing:-.5px}
+header p{margin:0;color:var(--muted);font-size:15px}
+.rounds{display:flex;flex-wrap:wrap;gap:6px;margin:18px 0 8px}
+.rounds button{border:2px solid var(--ink);color:var(--ink);background:transparent;border-radius:999px;padding:6px 12px;font:600 13px Inter,sans-serif;cursor:pointer}
+.rounds button.active{background:var(--ink);color:var(--bg)}
+.rounds button.done::after{content:" ✓"}
+.round-title{margin:10px 0 2px;font-size:19px;font-weight:800}
+.round-sub{margin:0 0 12px;color:var(--muted);font-size:14px}
+.info{font-size:14px;margin-bottom:12px;color:var(--muted)}
+.info b{color:var(--herring)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.tile{overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto;background:var(--tile);border:none;border-radius:8px;min-height:80px;padding:6px;font:700 clamp(11px,1.9vw,15px) Inter,sans-serif;text-transform:uppercase;cursor:pointer;line-height:1.15;color:var(--ink);transition:transform .1s, background .15s}
+.tile:hover{transform:translateY(-1px)}
+.tile.sel{background:var(--tile-sel);color:#fff}
+.tile.shake{animation:shake .35s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.solved{color:#1d1d1f;border-radius:8px;padding:12px 10px;text-align:center;margin-bottom:8px}
+@keyframes pop{from{transform:scale(.96);opacity:.4}to{transform:scale(1);opacity:1}}
+.solved h3{margin:0 0 3px;font-size:15px;text-transform:uppercase;font-weight:800}
+.solved .words{font-size:14px;font-weight:600}
+.solved .why{font-size:13px;margin-top:6px;font-weight:400;opacity:.9}
+.herrings{color:#1d1d1f;background:var(--herring);border-radius:8px;padding:12px;margin-bottom:8px}
+.herrings h3{margin:0 0 6px;text-align:center;text-transform:uppercase;font-size:15px}
+.herrings ul{margin:0;padding-left:18px;font-size:13.5px}
+.herrings li{margin:4px 0}
+.hint{text-align:center;font-size:14px;margin:0 0 12px;color:var(--ink)}
+.hint span{display:inline-block;background:var(--tile);border-radius:999px;padding:4px 12px;margin:3px;font-weight:600}
+.status{min-height:26px;text-align:center;font-weight:700;margin:12px 0 4px}
+.lives{text-align:center;font-size:14px;color:var(--muted)}
+.dot{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--tile-sel);margin:0 3px;vertical-align:middle}
+.dot.lost{background:var(--dotlost)}
+.controls{display:flex;justify-content:center;gap:8px;margin-top:22px;flex-wrap:wrap}
+.controls button{border:2px solid var(--ink);color:var(--ink);background:var(--btn);border-radius:999px;padding:9px 18px;font:600 14px Inter,sans-serif;cursor:pointer}
+.controls button.primary{background:var(--ink);color:var(--bg)}
+.controls button:disabled{opacity:.35;cursor:default}
+.score{text-align:center;margin-top:14px;font-size:14px;color:var(--muted)}
+details{margin-top:36px;background:var(--card);border-radius:10px;padding:12px 16px;border:1px solid var(--line)}
+summary{font-weight:700;cursor:pointer}
+.key h4{margin:16px 0 6px}
+.key table{width:100%;border-collapse:collapse;font-size:13px}
+.key td{border-top:1px solid var(--line);padding:6px 4px;vertical-align:top}
+.key td:first-child{font-weight:700;width:34%}
+.swatch{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px}
+.howto{font-size:14px;line-height:1.5}
+@media (max-width:520px){.tile{min-height:62px;font-size:10px;padding:4px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Investigating Science Module 6: technologies Connection</h1>
+  <button id="themeBtn" aria-label="Toggle light and dark mode"></button>
+</header>
+
+
+<div id="solvedArea"></div>
+<div class="hint" id="hint"></div>
+<div class="grid" id="grid"></div>
+<div class="status" id="status"></div>
+<div class="lives" id="lives"></div>
+<div class="controls">
+  <button id="shuffleBtn">Shuffle</button>
+  <button id="clearBtn">Deselect</button>
+  <button id="hintBtn">💡 Hint</button>
+  <button id="submitBtn" class="primary">Submit</button>
+  <button id="newBtn">New game</button>
+</div>
+
+
+</div>
+
+<script>
+const POOL = [
+  // Working scientifically: practical investigations (slides)
+  {name:"Temperature on reaction rate", tags:["rate-prac"], words:["Alka-Seltzer","Magnesium strip","Hydrochloric acid","Rate = 20 mL ÷ time"],
+   why:"Alka-Seltzer tablets in water at different temperatures, and the HSC method: drop a magnesium strip into HCl and time how long it takes to collect 20 mL of gas."},
+  {name:"Volume of gases", tags:["gas","gaslaw"], words:["Boyle's law","Charles' law","Kelvin scale","Model lung"],
+   why:"Boyle: pV = constant at constant temperature. Charles: V ∝ T at constant pressure, with T in kelvin (°C + 273). The model lung shows pressure–volume changes."},
+  {name:"Speed on distance travelled", tags:["speed"], words:["Sphero","Draw a path","Distance = speed × time","Time = distance ÷ speed"],
+   why:"The Sphero prac: draw a path in the app, set the speed and measure the distance. Speed, distance and time are linked by d = s × t."},
+  {name:"Assessing safety", tags:["safety"], words:["Safety Data Sheet","Safety goggles","WHS guidelines","Risk assessment"],
+   why:"Assess the safety of technologies using chemical safety data and Work Health and Safety guidelines, e.g. goggles stop acid injuring the eye."},
+  {name:"Testing for gases", tags:["gastests"], words:["Squeaky pop","Splint relights","Limewater","Damp litmus paper"],
+   why:"Hydrogen makes a lit splint pop, oxygen relights the splint, carbon dioxide turns limewater milky, and chlorine bleaches damp litmus paper."},
+  {name:"Systematic error", tags:["systematic"], words:["Poor calibration","Faulty measuring device","Detached thermometer column","Recalibrate the instrument"],
+   why:"Every reading is shifted the same way (like the HSC thermometer that read 3 °C out). Fix it by checking and recalibrating the instrument."},
+  {name:"Random error", tags:["random"], words:["Stopwatch reaction time","Wind and humidity","Repeat trials","Calculate a mean"],
+   why:"Unpredictable variation from human reaction time or changing conditions. Reduce its effect by repeating trials and averaging."},
+  {name:"Analogue technology", tags:["analogue"], words:["Clock with hands","Liquid-in-glass thermometer","Varying amplitude","Reading between scale marks"],
+   why:"Analogue technology turns information into electric pulses of varying amplitude, and you read it from a scale by eye."},
+  {name:"Digital technology", tags:["digital"], words:["Binary (0 or 1)","Digital ammeter","Stop clock to 0.01 s","Record the full reading"],
+   why:"Digital technology turns information into binary. Record every decimal shown, e.g. 1.32 s, not 1.3 s."},
+  {name:"Describing data quality", tags:["quality"], words:["Accuracy","Precision","Uncertainty","Reliability"],
+   why:"Accuracy is closeness to the true value, precision is how fine or consistent readings are, uncertainty is the range the true value lies in, and reliability is consistency when repeated."},
+  // Part 1: technology → science
+  {name:"X-ray diffraction & DNA", tags:["dna-xray","franklin"], words:["Rosalind Franklin","Photo 51","Diffraction pattern","Double helix"],
+   why:"X-rays diffracted by DNA crystals made a distinctive pattern (Photo 51). This was evidence for Watson and Crick's double helix model."},
+  {name:"Detecting radioactivity", tags:["detecting"], words:["Geiger–Müller counter","Wilson cloud chamber","Film badge","Photographic plate"],
+   why:"Uranium ores fogged photographic plates, revealing radioactivity. Cloud chambers show particle tracks, film badges record workers' exposure, and G–M counters detect emissions."},
+  {name:"Rutherford's gold foil experiment", tags:["goldfoil"], words:["Alpha particles","Gold foil","Screen that flashes","Nucleus"],
+   why:"Alpha particles were fired at thin gold foil, and a screen flashed where they hit. Most passed through, showing that atoms are mostly empty space with a small, massive, positive nucleus."},
+  {name:"Modelling Earth's geological history", tags:["geology"], words:["Plate tectonics","Mantle flow","Computer simulation","Fault zones"],
+   why:"Simulations model mantle flow, plate motion and fault zones. This is evidence that supports plate tectonic theory."},
+  {name:"The Hadron collider", tags:["lhc"], words:["CERN","Higgs boson","Particle accelerator","Standard Model"],
+   why:"The Standard Model needs the Higgs boson to explain why particles have mass. CERN's particle accelerator (the Large Hadron Collider) found it."},
+  // Part 2: science → technology
+  {name:"Laws of reflection & refraction", tags:["optics"], words:["Microscope","Reflecting telescope","Optic fibres","Adaptive optics"],
+   why:"Refraction led to microscopes, and reflection led to optic fibres and telescope mirrors. Adaptive optics change mirror shape to correct atmospheric distortion."},
+  {name:"Radioactivity → technology", tags:["radiotech"], words:["Gamma rays","Radiotherapy","Little Boy","Manhattan Project"],
+   why:"Radioactive decay knowledge led to radiotherapy (gamma rays directed at cancer cells) and to nuclear bombs such as Little Boy (Manhattan Project)."},
+  {name:"DNA structure → biotechnology", tags:["biotech"], words:["Plasmid","Recombinant DNA","Bt cotton","Transgenic"],
+   why:"Knowing DNA contains genes allowed a gene to be cut out of one organism and inserted into another (recombinant DNA), e.g. transgenic Bt cotton."},
+  {name:"Newton's laws → earthquake-proofing", tags:["earthquake"], words:["Inertia","Base isolation","Newton's first law","Shock absorbers"],
+   why:"Base isolation rests buildings on shock-absorbing objects. When the ground shakes, inertia holds the building still (Newton's first law)."},
+  {name:"Kidney science → technology", tags:["dialysis"], words:["Dialysis machine","Kidneys filter blood","Membranes","Cellulose fibres"],
+   why:"From the slides: knowing how kidneys filter blood led to dialysis machines, and understanding membranes led to cellulose-based synthetic fibres."},
+  // Part 3: Australian context
+  {name:"Aboriginal & Torres Strait Islander knowledge", tags:["indigenous"], words:["Bush medicine","Emu bush","Cultural & intellectual property","Partnership with communities"],
+   why:"Emu bush has been used as a decoction for sores and an infusion for headaches and colds. This knowledge is Indigenous cultural and intellectual property, so research needs partnership with communities."},
+  {name:"Ethics of bioharvesting", tags:["indigenous","bioharvest"], words:["Overharvesting","Sacred sites","Slow-growing plants","Country and Place"],
+   why:"Harvest areas may be sacred, native plants can be slow to grow, overharvesting damages the environment, and plants are bioharvested from Country and Place."},
+  // Fun: people
+  {name:"Scientists in Module 6", tags:["scientists","franklin"], words:["Watson","Crick","Rutherford","J.J. Thomson"],
+   why:"Watson and Crick modelled DNA, Rutherford ran the gold foil experiment, and Thomson's plum pudding model was disproved by it."},
+  {name:"Our teachers", tags:["teachers"], words:["Lay","Frew","Rogers","Mai"], why:"Teachers at our school."},
+  {name:"Our teachers", tags:["teachers"], words:["Downes","Sant","Lam","Huang"], why:"Teachers at our school."},
+  {name:"Our teachers", tags:["teachers"], words:["Koulouris","Alexander-Enobakhare","Choudary","Bhagchandani"], why:"Teachers at our school. Bonus points if you can spell them all!"}
+];
+// Red herrings: a tile that belongs to its own group but looks like it fits a group with one of these tags
+const HERRINGS = {
+  "Hydrochloric acid":{tempts:["safety"],why:"It's a hazard, but here it's a reactant in the rate prac. (The Safety Data Sheet is the safety technology.)"},
+  "Kelvin scale":{tempts:["rate-prac","analogue"],why:"It's about temperature, but kelvin is needed for Charles' law calculations (°C + 273)."},
+  "Model lung":{tempts:["dialysis"],why:"It's a model of a body part, but it's used to show how pressure changes gas volume."},
+  "Limewater":{tempts:["gas"],why:"It's about gases, but limewater tests for carbon dioxide. It doesn't measure volume."},
+  "Squeaky pop":{tempts:["rate-prac"],why:"Mg + HCl does make hydrogen, but the squeaky pop is the test for hydrogen gas."},
+  "Stopwatch reaction time":{tempts:["speed","rate-prac"],why:"Stopwatches are used in pracs, but human reaction time is the random error here."},
+  "Liquid-in-glass thermometer":{tempts:["systematic","rate-prac"],why:"The HSC faulty thermometer comes to mind, but this tile is an example of an analogue device."},
+  "Poor calibration":{tempts:["digital","analogue"],why:"Any device can be badly calibrated, but poor calibration is the classic cause of systematic error."},
+  "Accuracy":{tempts:["systematic"],why:"Systematic errors affect accuracy, but accuracy itself describes data quality."},
+  "Precision":{tempts:["random","digital"],why:"Random error affects precision, and digital readings show it, but precision describes data quality."},
+  "Record the full reading":{tempts:["quality","random"],why:"It sounds like a data-quality rule, but it's specifically about digital displays (1.32 s, not 1.3 s)."},
+  "Photographic plate":{tempts:["dna-xray"],why:"Photo 51 was a photograph, but photographic plates fogged by uranium revealed radioactivity."},
+  "Nucleus":{tempts:["dna-xray","biotech"],why:"DNA is found in the cell nucleus, but this is the atomic nucleus found by the gold foil experiment."},
+  "Screen that flashes":{tempts:["detecting"],why:"It does detect particles, but it's the screen around Rutherford's gold foil."},
+  "Alpha particles":{tempts:["detecting","lhc"],why:"Alpha tracks show in cloud chambers, but alpha particles were the 'bullets' fired at the gold foil."},
+  "Particle accelerator":{tempts:["detecting","goldfoil"],why:"It's about particles, but it's what the Hadron collider is: a machine that accelerates protons."},
+  "Higgs boson":{tempts:["scientists","teachers"],why:"It's named after a person (Peter Higgs), but it's the particle found at CERN."},
+  "Gamma rays":{tempts:["optics"],why:"They're electromagnetic waves like light, but they come from radioactive decay and are used in radiotherapy."},
+  "Optic fibres":{tempts:["dialysis","radiotech"],why:"They're used in medicine, but they were developed from the law of reflection."},
+  "Microscope":{tempts:["biotech","dna-xray"],why:"It's a biology tool, but microscopes were developed from the law of refraction."},
+  "Shock absorbers":{tempts:["geology"],why:"They're about earthquakes, but they're the engineering under base-isolated buildings."},
+  "Fault zones":{tempts:["earthquake"],why:"They cause earthquakes, but here they're modelled in computer simulations of plate movement."},
+  "Membranes":{tempts:["biotech"],why:"They sound like cell biology, but here they're about filtering blood in dialysis."},
+  "Transgenic":{tempts:["indigenous","bioharvest"],why:"It's about organisms, but transgenic technology inserts a gene from one species into another."},
+  "Emu bush":{tempts:["biotech"],why:"It's a plant with medical uses, but it's Aboriginal bush medicine, not a GM crop."},
+  "Country and Place":{tempts:["geology"],why:"It sounds like geography, but it's the Aboriginal concept of where plants are bioharvested from."},
+  "Rutherford":{tempts:["teachers","goldfoil"],why:"Could be a staff member, but Rutherford fired alpha particles at gold foil."},
+  "Watson":{tempts:["teachers"],why:"Could be a staff member, but it's Watson of Watson and Crick (DNA)."},
+  "Crick":{tempts:["teachers"],why:"Could be a staff member, but it's Crick of Watson and Crick (DNA)."},
+  "Little Boy":{tempts:["teachers","scientists"],why:"Sounds like a person, but it's the nuclear bomb dropped on Hiroshima."},
+  "Sphero":{tempts:["teachers","detecting"],why:"Sounds like a name, but it's the robot used in the speed on distance prac."}
+};
+const HERRING_WHY={}, TEMPTS={};
+Object.entries(HERRINGS).forEach(([w,h])=>{HERRING_WHY[w]=h.why;TEMPTS[w]=h.tempts;});
+POOL.forEach((g,i)=>g.id=String(i));
+
+const owner={}; POOL.forEach((g,i)=>g.words.forEach(w=>(owner[w]=owner[w]||[]).push(i)));
+function clash(a,b){const A=POOL[a],B=POOL[b];return A.tags.some(t=>B.tags.includes(t))||A.words.some(w=>B.words.includes(w))}
+function activeHerrings(ids){
+  const out=[];
+  ids.forEach(i=>POOL[i].words.forEach(w=>{
+    const tempts=TEMPTS[w]; if(!tempts)return;
+    const lure=ids.filter(j=>j!==i&&POOL[j].tags.some(t=>tempts.includes(t)));
+    if(lure.length)out.push({word:w,lure:lure.map(j=>POOL[j].name),why:HERRING_WHY[w]});
+  }));
+  return out;
+}
+// Every valid board of 4 groups, scored by how many red herrings are live on it
+const BOARDS=[];
+for(let a=0;a<POOL.length;a++)for(let b=a+1;b<POOL.length;b++){if(clash(a,b))continue;
+ for(let c=b+1;c<POOL.length;c++){if(clash(a,c)||clash(b,c))continue;
+  for(let d=c+1;d<POOL.length;d++){if(clash(a,d)||clash(b,d)||clash(c,d))continue;
+   const ids=[a,b,c,d]; BOARDS.push({ids,score:activeHerrings(ids).length});}}}
+const GOOD=BOARDS.filter(x=>x.score>=4).length>=50?BOARDS.filter(x=>x.score>=4):BOARDS.filter(x=>x.score>=3);
+
+const COLORS=["var(--g0)","var(--g1)","var(--g2)","var(--g3)"];
+const MAX_MISTAKES=4;
+const $=id=>document.getElementById(id);
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+let S=null, lastIds=[];
+function newGame(){
+  // Pick a random group first so every group gets a fair turn, then a board built around it
+  let pick, tries=0;
+  do{
+    const anchor=Math.floor(Math.random()*POOL.length);
+    const options=GOOD.filter(b=>b.ids.includes(anchor));
+    pick=options[Math.floor(Math.random()*options.length)];
+    tries++;
+  }while(tries<50 && (!pick || pick.ids.filter(i=>lastIds.includes(i)).length>1));
+  lastIds=pick.ids;
+  const ids=shuffle([...pick.ids]);
+  S={ids,herrings:activeHerrings(ids),tiles:shuffle(ids.flatMap(i=>POOL[i].words)),
+     selected:[],solved:[],hints:[],mistakes:0,over:false,won:false,guesses:[]};
+  $("status").textContent="";
+  render();
+}
+function groupOf(w){return S.ids.findIndex(i=>POOL[i].words.includes(w))}
+function isHerring(w){return S.herrings.some(h=>h.word===w)}
+function solvedHTML(k){
+  const g=POOL[S.ids[k]];
+  return `<div class="solved" style="background:${COLORS[k]}"><h3>${g.name}</h3><div class="words">${g.words.map(w=>isHerring(w)?w+" 🐟":w).join(", ")}</div><div class="why">${g.why}</div></div>`;
+}
+function render(){
+  let html=S.solved.map(k=>solvedHTML(k)).join("");
+  if(S.over){
+    S.ids.forEach((_,k)=>{if(!S.solved.includes(k))html+=solvedHTML(k)});
+    html+=`<div class="herrings"><h3>🐟 The red herrings</h3><ul>${S.herrings.map(h=>`<li><b>${h.word}</b> (looked like <i>${h.lure.join(" / ")}</i>): ${h.why}</li>`).join("")}</ul></div>`;
+  }
+  $("solvedArea").innerHTML=html;
+  const shown=S.hints.filter(k=>!S.solved.includes(k));
+  $("hint").innerHTML=(!S.over&&shown.length)?"💡 Find: "+shown.map(k=>`<span>${POOL[S.ids[k]].name}</span>`).join(""):"";
+  $("hint").style.display=(!S.over&&shown.length)?"":"none";
+  const grid=$("grid"); grid.innerHTML="";
+  if(!S.over){
+    S.tiles.filter(t=>!S.solved.includes(groupOf(t))).forEach(t=>{
+      const b=document.createElement("button");
+      b.className="tile"+(S.selected.includes(t)?" sel":"");
+      b.textContent=t; b.dataset.w=t; b.onclick=()=>toggle(t);
+      grid.appendChild(b);
+    });
+  }
+  $("lives").innerHTML=Array.from({length:MAX_MISTAKES},(_,i)=>`<span class="dot ${i<S.mistakes?'lost':''}"></span>`).join("");
+  $("submitBtn").disabled=S.over||S.selected.length!==4;
+  $("clearBtn").disabled=S.over||!S.selected.length;
+  $("shuffleBtn").disabled=S.over;
+  $("hintBtn").disabled=S.over||S.ids.every((_,k)=>S.solved.includes(k)||S.hints.includes(k));
+}
+function toggle(t){
+  if(S.over)return;
+  $("status").textContent="";
+  const i=S.selected.indexOf(t);
+  if(i>=0)S.selected.splice(i,1); else if(S.selected.length<4)S.selected.push(t);
+  render();
+}
+function submit(){
+  if(S.selected.length!==4)return;
+  const key=[...S.selected].sort().join("|");
+  if(S.guesses.includes(key)){$("status").textContent="Already guessed!";return;}
+  S.guesses.push(key);
+  const counts={}; S.selected.forEach(w=>{const g=groupOf(w);counts[g]=(counts[g]||0)+1});
+  const hit=Object.entries(counts).find(([g,c])=>c===4);
+  if(hit){
+    S.solved.push(+hit[0]); S.selected=[];
+    if(S.solved.length===4){S.over=true;S.won=true;}
+    render();
+    $("status").textContent=S.over?(S.mistakes===0?"Perfect! No mistakes 🎉":"Solved! 🎉"):"Correct! ✔";
+    return;
+  }
+  S.mistakes++;
+  const msg=Object.values(counts).some(c=>c===3)?"One away…":"Not a group.";
+  document.querySelectorAll(".tile.sel").forEach(el=>{el.classList.remove("shake");void el.offsetWidth;el.classList.add("shake")});
+  if(S.mistakes>=MAX_MISTAKES){S.over=true;S.selected=[];render();$("status").textContent="Out of mistakes. Here are the answers.";return;}
+  render(); $("status").textContent=msg;
+}
+$("submitBtn").onclick=submit;
+$("hintBtn").onclick=()=>{
+  const left=S.ids.map((_,k)=>k).filter(k=>!S.solved.includes(k)&&!S.hints.includes(k));
+  if(!left.length)return;
+  S.hints.push(left[Math.floor(Math.random()*left.length)]);
+  $("status").textContent="";
+  render();
+};
+$("clearBtn").onclick=()=>{S.selected=[];render()};
+$("shuffleBtn").onclick=()=>{shuffle(S.tiles);render()};
+$("newBtn").onclick=()=>{newGame();window.scrollTo({top:0,behavior:"smooth"})};
+
+function setTheme(t){
+  document.documentElement.dataset.theme=t;
+  $("themeBtn").textContent=t==="dark"?"☀️":"🌙";
+  try{localStorage.setItem("m6-theme",t)}catch(e){}
+}
+let saved=null; try{saved=localStorage.getItem("m6-theme")}catch(e){}
+setTheme(saved||((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light"));
+$("themeBtn").onclick=()=>setTheme(document.documentElement.dataset.theme==="dark"?"light":"dark");
+
+newGame();
+</script>
+</body>
+</html>
